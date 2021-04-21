@@ -1,0 +1,19 @@
+{
+    "name": "cs-546-final",
+    "version": "1.0.0",
+    "description": "Final",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app.js"
+    },
+    "author": "Jerry, Nick, Nick, Yakov",
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.17.1",
+        "express-handlebars": "^3.1.0",
+        "bcryptjs": "^2.4.3",
+        "express-session": "^1.17.1",
+        "mongodb": "^3.6.4",
+        "xss": "^1.0.8"
+    }
+}
