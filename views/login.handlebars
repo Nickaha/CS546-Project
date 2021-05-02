@@ -1,18 +1,42 @@
 <main>
 
     <form id="login-form" method="post" action="/login">
-        <label for="username">Username</label>
-        <input id="username" type="text" name="username"/>
+        <label for="username">Username</label><br>
+        <input id="username" type="text" name="username"/><br>
 
-        <label for="password">Password</label>
-        <input id="password" type="password" name="password"/>
+        <label for="password">Password</label><br>
+        <input id="password" type="password" name="password"/><br>
 
         <button type="submit">Login</button>
 
+        <button type="submit">Register for account</button>
+
     </form>
 
-    <a href ="">Register for an account</a>
+    <form id="register-form" method="post" action="" hidden>
+        <label for="username">Set Username</label><br>
+        <input id="username" type="text" name="username"/><br>
 
+        <label for="email">Enter Email</label><br>
+        <input id="email" type="text" name="email"/><br>
+
+        <label for="country">Enter country</label><br>
+        <input id="country" type="text" name="country"/><br>
+
+        <label for="age">Enter Age</label><br>
+        <input id="age" type="number" name="age"/><br>
+
+        <label for="bank">Enter Bank Routing Number</label><br>
+        <input id="bank" type="text" name="bank"/><br>
+
+        <label for="password1">Set Password</label><br>
+        <input id="password1" type="password" name="password1"/><br>
+
+        <label for="password2">Re-enter your Password</label><br>
+        <input id="password2" type="password" name="password2"/><br>
+
+        <button type="submit">Register</button>
+    </form>
     {{#if error}}
         <h3>{{error}}</h3>
     {{/if}}
