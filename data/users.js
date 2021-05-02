@@ -22,6 +22,7 @@ async function createUser(firstName, lastName, userName, email, country, age, pa
     if(typeof BankInfo !== 'string' || BankInfo.trim().length===0) throw `Bank information should be string and not all spaces`;
 
     if(typeof age !== 'number' || isNaN(age)) throw "age should be number";
+    if(age<18) throw 'age needs to be greather than 18 at least';
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if(!re.test(String(email).toLowerCase())) throw "invalid email type";
     const userListings = [];
@@ -108,6 +109,7 @@ async function updateUser(id, updateInfo){
     }
     if(updateInfo.age){
         if(typeof updateInfo.age !== 'number') throw `age should be int`;
+        if(updateInfo.age<18) throw 'age needs to be greather than 18 at least';
         userUpdate.age = updateInfo.age;
     }
     if(updateInfo.country){
