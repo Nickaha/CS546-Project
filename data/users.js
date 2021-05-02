@@ -55,7 +55,7 @@ async function createUser(firstName, lastName, userName, email, country, age, pa
 
 async function getAll(){
     const userCollection = await users();
-    const userlist = await userCollection.find({},{projection:{_id:1,password:0, BankInfo:0}}).toArray();
+    const userlist = await userCollection.find({},{projection:{_id:1,BankInfo:0}}).toArray();
     return userlist;
 }
 

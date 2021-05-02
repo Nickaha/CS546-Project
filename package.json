@@ -14,6 +14,7 @@
         "express-handlebars": "^3.1.0",
         "express-session": "^1.17.1",
         "mongodb": "^3.6.4",
+        "path": "^0.12.7",
         "uuid": "^8.3.2",
         "xss": "^1.0.8"
     }

@@ -2,6 +2,7 @@ const userRoute = require('./users');
 const listingRoute = require('./listings');
 const commentRoute = require('./comments');
 const bidRoute = require('./bids');
+const path = require('path');
 
 const constructorMethod = (app) => {
   app.use('/user', userRoute);
@@ -9,6 +10,9 @@ const constructorMethod = (app) => {
   app.use('/comment', commentRoute);
   app.use('/bid',bidRoute);
 
+  app.get('/aboutus', (req,res) =>{
+    res.render('aboutus',{title:'About Us'});
+  })
   app.use('*', (req, res) => {
     res.redirect('/user');
   });
