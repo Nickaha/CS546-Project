@@ -5,4 +5,15 @@
         <a href="/about">About</a>
         <a href="/login">Login</a>
     </div>
+
+    {{#each NFT}}
+    <div class="card">
+        <img src= {{NFT.image}} alt="">
+        <div class="container">
+            <h4><b>{{NFT.expire}}</b></h4>
+            <p>{{NFT.user}}</p>
+            <p>{{NFT.desc}}</p>
+        </div>
+    </div>
+    {{/each}}
 </main>
