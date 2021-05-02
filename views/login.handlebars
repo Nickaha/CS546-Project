@@ -37,5 +37,8 @@
 
         <button type="submit">Register</button>
     </form>
-    <div id="error-container2" hidden></div>
+    <div id="error-container2" hidden>
+        {{#each error}}
+        <p>{{this}}</p>
+    </div>
 </main>
