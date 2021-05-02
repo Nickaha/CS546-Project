@@ -1,7 +1,6 @@
 const mongoCollections = require('../config/mongoCollections');
 const users = mongoCollections.users;
 const bcrypt = require('bcryptjs');
-const { books } = require('../../lab6/config/mongoCollections');
 const uuid = require('uuid');
 
 async function createUser(firstName, lastName, userName, email, country, age, password, BankInfo){
@@ -22,7 +21,7 @@ async function createUser(firstName, lastName, userName, email, country, age, pa
     if(typeof password !== 'string' || password.trim().length===0) throw `password should be string and not all spaces`;
     if(typeof BankInfo !== 'string' || BankInfo.trim().length===0) throw `Bank information should be string and not all spaces`;
 
-    if(typeof age !== 'number') throw "age should be number";
+    if(typeof age !== 'number' || isNaN(age)) throw "age should be number";
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if(!re.test(String(email).toLowerCase())) throw "invalid email type";
     const userListings = [];
@@ -76,7 +75,7 @@ async function removeUser(id){
     const userCollection = await users();
     const user = userCollection.findOne({_id:id});
     if (user === null) throw 'No user with that id';
-    const deleteinfo = userCollection.deleteOne({_id:id});
+    const deleteinfo = await userCollection.deleteOne({_id:id});
     if(deleteinfo.deletedCount===0) throw "could not delete the user";
     return true;
 }
