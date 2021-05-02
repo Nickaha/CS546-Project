@@ -78,3 +78,13 @@ label {
 	position: relative;
 }
 
+.container {
+    padding: 0 16px;
+}
+
+.container::after, .row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
