@@ -1,3 +1,80 @@
-p {
-    
+/*Intial css styles*/
+
+* {
+	box-sizing: border-box;
 }
+
+html,
+body {
+	font-size: 14pt;
+}
+
+body {
+	background: #dedede;
+}
+
+main {
+	max-width: 75%;
+	margin: auto;
+}
+
+header {
+	border-bottom: 1px solid #afafaf;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	color: #222;
+	margin-bottom: 5px;
+}
+
+h1 {
+	font-size: 2rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+}
+
+h3 {
+	font-size: 1.5rem;
+}
+
+h4 {
+	font-size: 1.25rem;
+}
+
+h5 {
+	font-size: 1.15rem;
+}
+
+h6 {
+	font-size: 1.05rem;
+}
+
+p {
+	font-size: 1rem;
+	line-height: 2;
+}
+
+button {
+    background-color: #222;
+    color:white;
+    padding: 10px 10px;
+    display: inline-block;
+    font-size: 2rem;
+
+}
+
+.error {
+    color: red;
+}
+
+label {
+	position: relative;
+}
+
