@@ -1,5 +1,4 @@
 const express = require('express');
-const { route, use } = require('../../lab10/routes/login');
 const router = express.Router();
 const data = require('../data');
 const userData = data.users;
