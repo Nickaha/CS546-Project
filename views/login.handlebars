@@ -12,7 +12,11 @@
         <button type="submit">Register for account</button>
 
     </form>
-    <div id="error-container" hidden></div>
+    <div id="error-container" hidden>
+        {{#each error}}
+        <p>{{this}}</p>
+        {{/each}}
+    </div>
     <form id="register-form" method="post" action="/user/register" hidden>
         <label for="username">Set Username</label><br>
         <input id="username" type="text" name="username"/><br>
