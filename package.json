@@ -4,7 +4,8 @@
     "description": "Final",
     "main": "app.js",
     "scripts": {
-        "start": "node app.js"
+        "start": "node app.js",
+        "seed": "node ./task/seed.js"
     },
     "author": "Jerry, Nick, Nick, Yakov",
     "license": "ISC",

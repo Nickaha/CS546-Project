@@ -1,5 +1,4 @@
 const express = require('express');
-const { route, use } = require('../../lab10/routes/login');
 const router = express.Router();
 const data = require('../data');
 const userData = data.users;
@@ -70,6 +69,27 @@ router.post('/register', async (req,res)=>{
     } catch(e){
         errors.push(e);
         res.status(401).render('login',{errors:errors, hasserror:true, title:'Log in', register:true});
+    }
+});
+
+router.post('/changepw',async(req,res)=>{
+    let changedata = req.body;
+    let errors=[];
+    if(!changedata.username) errors.push('username is not provided');
+    if(!changedata.password1) errors.push("new password is not provided");
+    if(!changedata.password2) errors.push("re-enter new password is not provided");
+    if(changedata.password1 === changedata.password2) errors.push("password doesn't match");
+    if(errors.length>0){
+        res.status(401).render('accountdashboard',{errors:errors, hasserror:true, title:'Dash Board'});
+        return;
+    }
+    try{
+        const updateuser = userData.updateUser(req.session.user._id,{password:password1});
+        req.session.user = updateuser;
+        res.redirect('/');
+    } catch(e){
+        errors.push(e);
+        res.status(401).render('accountdashbaord',{errors:[e], hasserror:true, title:'Dash Board'});
     }
 });
 
