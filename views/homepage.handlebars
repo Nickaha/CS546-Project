@@ -3,6 +3,18 @@
         <a href="/dashboard">My dashboard</a>
         <a href="https://www.coindesk.com/price/bitcoin" target="_blank">Bitcoin Price</a>
         <a href="/about">About</a>
-        <a href="/login">Login</a>
+        <a href="/user/login">Login</a>
+        <a href="/user/logout">Logout</a>
     </div>
+
+    {{#each NFT}}
+    <div class="card">
+        <img src= {{NFT.image}} alt="">
+        <div class="container">
+            <h4><b>{{NFT.expire}}</b></h4>
+            <p>{{NFT.user}}</p>
+            <p>{{NFT.desc}}</p>
+        </div>
+    </div>
+    {{/each}}
 </main>
