@@ -1,5 +1,5 @@
 const express = require('express');
-const { route } = require('../../lab10/routes/login');
+const { route, use } = require('../../lab10/routes/login');
 const router = express.Router();
 const data = require('../data');
 const userData = data.users;
@@ -45,5 +45,45 @@ router.post('/login', async (req,res) =>{
 });
 
 router.post('/register', async (req,res)=>{
-    
+    let registedata = req.body;
+    let errors = [];
+    if(!registedata.firstname) errors.push('firstname is not provided');
+    if(!registedata.lastname) errors.push('lastname is not provided');
+    if(!registedata.username) errors.push('username is not provided');
+    if(!registedata.email) errors.push('email is not provided');
+    if(!registedata.age) errors.push('age is not provided');
+    if(!registedata.email) errors.push(`email is not provided`);
+    if(!registedata.country) errors.push('country is not provided');
+    if(!registedata.bank) errors.push('bank information is not provided');
+    if(!registedata.password1) errors.push('password is not provided');
+    if(!registedata.password2) errors.push('password re-enter is not provided');
+
+    if(registedata.password1!==registedata.password2) errors.push('passwords are not same when re-enter');
+    if(errors.length>0){
+        res.status(401).render('login',{errors:errors, hasserror:true, title:'Log in',register:true});
+        return;
+    }
+    try{
+        const newuser = userData.createUser(registedata.firstname, registedata.lastname, registedata.username, registedata.email, registedata.country, registedata.age, registedata.password1, registedata.bank);
+        req.session.user = newuser;
+        res.redirect('/');
+    } catch(e){
+        errors.push(e);
+        res.status(401).render('login',{errors:errors, hasserror:true, title:'Log in', register:true});
+    }
 });
+
+router.get('/dashboard',async (req,res)=>{
+    if(!req.session.user){
+        res.redirect('/');
+    } else{
+        res.render('accountdashboard',{title:"Dash Board"});
+    }
+});
+
+router.get('/logout', async(req,res)=>{
+    req.session.destroy();
+    res.render('logout', {title:'Log out'});
+});
+
+module.exports = router;
