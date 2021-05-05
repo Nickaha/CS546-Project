@@ -7,13 +7,16 @@
         <a href="/user/logout">Logout</a>
     </div>
 
+    <h1>NFT Marketplace</h1>
+
     {{#each NFT}}
-    <div class="card">
-        <img src= {{NFT.image}} alt="">
-        <div class="container">
-            <h4><b>{{NFT.expire}}</b></h4>
+    <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src= {{NFT.image}} alt="NFT image">
+        <div class="card-body">
+            <h4 class="card-title"><b>{{NFT.expire}}</b></h4>
             <p>{{NFT.user}}</p>
             <p>{{NFT.desc}}</p>
+            <p>{{NFT.highestbid}}</p>
         </div>
     </div>
     {{/each}}
