@@ -2,7 +2,7 @@
     <h1>My Bids</h1>
     {{#each NFT}}
     <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src= {{this.image}} alt="NFT image">
+        <a href=""><img class="card-img-top" src= {{this.image}} alt="NFT image"></a>
         <div class="card-body">
             <h4 class="card-title"><b>{{this.expire}}</b></h4>
             <p>{{this.desc}}</p>
