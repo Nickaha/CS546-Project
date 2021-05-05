@@ -1,0 +1,29 @@
+<main>
+    <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src= {{NFT.image}} alt="NFT image">
+        <div class="card-body">
+            <h4 class="card-title"><b>{{NFT.expire}}</b></h4>
+            <p>{{NFT.desc}}</p>
+            <p>{{NFT.highestbid}}</p>
+            <ul id = "comments">
+            {{#each NFT.comments}}
+            <li>
+                {{this}}
+            </li>
+            {{/each}}
+            </ul>
+        </div>
+    </div>
+
+    <form id="bid-or-comment" method="post" action="">
+        <label for="bid">Enter Bid</label><br>
+        <input id="bid" type="number" name="bid"/><br>
+
+        <label for="comment">Enter Comment</label><br>
+        <textarea id="comment" name="comment" rows="4" cols="50"></textarea><br>
+
+        <button type="submit">Submit</button>
+
+    </form>
+    <div id="bid-or-comment-error" hidden></div>
+</main>
