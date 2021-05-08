@@ -83,3 +83,5 @@ router.delete('/:id', async (req, res) => {
     let retval = await bidData.deleteBid(bidId);
     // TODO - return to some page after request finishes.
 });
+
+module.exports =router;
