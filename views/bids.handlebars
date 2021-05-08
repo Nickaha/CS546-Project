@@ -1,5 +1,8 @@
 <main>
     <h1>My Bids</h1>
+    {{#if message}}
+        <div>{{message}}</div> 
+    {{/if}}
     {{#each NFT}}
     <div class="card" style="width: 18rem;">
         <a href=""><img class="card-img-top" src= {{this.image}} alt="NFT image"></a>

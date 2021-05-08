@@ -24,6 +24,7 @@ router.post('/login', async (req,res) =>{
         const hashpw = await bcrypt.compare(logindata.password, x.password);
         if(hashpw && x.username===logindata.username){
             validuser= true;
+            //Whole user is stored in session currently - Should we remove hashed passwords from the cookie?
             user = x;
         }
     }

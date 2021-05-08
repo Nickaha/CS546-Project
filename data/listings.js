@@ -56,6 +56,7 @@ async function getallofuser(userid){
     return userListings;
 }
 
+//Listing is misspelled
 async function getLisingById(id){
     if(!id) throw `id is not provided`;
     if(typeof id !== 'string') throw `id is not string`;

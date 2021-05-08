@@ -29,7 +29,8 @@ async function createBid(username, bid, listid){
         _id:uuid.v4(),
         username:username,
         bid:bid,
-        highestBid:highestBid
+        highestBid:highestBid,
+        listid:listid
     };
     const insertInfo = await bidCollection.insertOne(newBid);
     if (insertInfo.insertedCount === 0) throw 'Could not add bid';
