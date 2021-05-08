@@ -1,6 +1,5 @@
 const userRoute = require('./users');
 const listingRoute = require('./listings');
-const commentRoute = require('./comments');
 const bidRoute = require('./bids');
 const path = require('path');
 
