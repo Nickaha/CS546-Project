@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const data = require('/data');
+const data = require('../data');
 const bidData = data.bids;
 const listingData = data.listings
 
@@ -47,7 +47,7 @@ router.get( '/', async (req, res) =>{
     }
 } );
 
-router.post('/:id', async (req, req) => {
+router.post('/:id', async (req, res) => {
     //TODO - Check user authentication
     
     console.log("POST bids/:id");
@@ -64,7 +64,7 @@ router.post('/:id', async (req, req) => {
     // TODO - Return to some page after request finishes.
 });
 
-router.delete('/:id', async (req, req) => {
+router.delete('/:id', async (req, res) => {
     //TODO - Check user authentication
     
     const bidId = req.params.id;
