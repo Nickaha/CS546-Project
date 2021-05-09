@@ -88,3 +88,6 @@ label {
     display: table;
 }
 
+#error-container2 {
+	color: red;
+}
