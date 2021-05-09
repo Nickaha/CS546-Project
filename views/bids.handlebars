@@ -3,7 +3,9 @@
     {{#if message}}
         <div>{{message}}</div> 
     {{/if}}
-    {{#each NFT}}
+    {{#if NFT}}
+        {{#each NFT}}
+    
     <div class="card" style="width: 18rem;">
         <a href=""><img class="card-img-top" src= {{this.image}} alt="NFT image"></a>
         <div class="card-body">
@@ -14,5 +16,5 @@
         </div>
     </div>
     {{/each}}
-
+    {{/if}}
 </main>
