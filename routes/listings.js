@@ -10,7 +10,8 @@ router.get('/', async (req,res)=>{
     } else{
         try{
             const listinglist = await listingData.getallofuser(req.session.user._id);
-            res.render('listings', {listinglist:listinglist});
+            console.log(listinglist);
+            res.render('listings', {NFT:listinglist});
         } catch(e){
             res.status(401).render('listings',{error:e, haserror:true});
         }

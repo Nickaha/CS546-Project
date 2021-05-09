@@ -62,7 +62,12 @@ async function getAll(){
 async function getallofuser(userid){
     const userinfo = await users.getUserById(userid);
     const {userListings} = userinfo;
-    return userListings;
+    let result = [];
+    for (listingsinfo of userListings){
+        const addlist = await this.getLisingById(listingsinfo);
+        result.push(addlist);
+    }
+    return result;
 }
 
 //Listing is misspelled

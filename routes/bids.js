@@ -12,6 +12,7 @@ router.get( '/', async (req, res) =>{
         const user = req.session.user;
         // Fetch all the bids for that user.
         const userBids = await bidData.getUserBids(user._id);
+        console.log(userBids);
         //Get myBid onto the NFT listings, get highestBid as well.
         let bidListings = [];
         for (let i = 0; i < userBids.length; i++){

@@ -17,13 +17,20 @@ async function main(){
     //https://en.wikipedia.org/wiki/Image where the image is from
     const listing1 = await listings.createListing('05/02/2021', '05/12/2021', 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1200px-Image_created_with_a_mobile_phone.png',
     'Man with phone older than himself');
-    console.log(listing1)
+    //console.log(listing1)
     const sally = await users.createUser('Sally', 'Lee', 'sallylee', 'sally@lee.com', 'Canada', 29, 'superpassword!', '0000111122223333');
-    const sallyid = sally._id;
-    await bids.createBid("sallylee", 50, listing1._id);
-    const sallyname = sally.firstName + sally.lastName;
-    await comments.createComment(sallyname, 'This make me feel young, I think this phone is even older than me!');
     
+    const sallyid = sally._id;
+    const newbid = await bids.createBid("sallylee", 50, listing1._id);
+    sally.userBids.push(newbid._id);
+    const res = await users.updateUser(sallyid,{userBids:sally.userBids});
+    //console.log(res);
+    const sallyname = sally.firstName + sally.lastName;
+    const newcomment = await comments.createComment(sallyname, 'This make me feel young, I think this phone is even older than me!',listing1._id);
+    // listing1.comments.push(newcomment);
+    // const res2 = await listings.updateListing(listing1._id,{comments:listing1.comments});
+    sally.userListings.push(listing1._id);
+    const res3 = await users.updateUser(sallyid,{userListings:sally.userListings});
     console.log('Done seeding database');
     await db.serverConfig.close();
 }

@@ -32,8 +32,8 @@ async function createComment(name, comment, listingid){
     const rv = await this.getCommentById(newId.toString());
     rv._id = rv._id.toString();
     // Add to subdocument as well and updatelisting.
-    listingComments.append(newComment);
-    await listings.updateListing(listid, {bids:listingComments});
+    listingComments.push(newComment);
+    await listings.updateListing(listingid, {comments:listingComments});
     return rv;
 }
 
@@ -44,7 +44,7 @@ async function getAll(){
 }
 
 async function getListingComments(listingid){
-    const listinginfo = listings.getLisingById(listingid);
+    const listinginfo = await listings.getLisingById(listingid);
     const commentlist = listinginfo.comments;
     return commentlist;
 }

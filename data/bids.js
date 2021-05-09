@@ -45,7 +45,7 @@ async function createBid(username, bid, listid){
         });
     }
     // Add to subdocument and update listing.
-    bidoflist.append(newBid);
+    bidoflist.push(newBid);
     await listings.updateListing(listid, {bids:bidoflist});
     return rv;
 }
@@ -57,13 +57,13 @@ async function getAll(){
 }
 
 async function getListingBids(listid){
-    const listinfo = listings.getLisingById(listid);
+    const listinfo = await listings.getLisingById(listid);
     const bidlist = listinfo.bids;
     return bidlist;
 }
 
 async function getUserBids(userid){
-    const userinfo = users.getUserById(userid);
+    const userinfo =await users.getUserById(userid);
     const bidlist = userinfo.userBids;
     return bidlist;
 }

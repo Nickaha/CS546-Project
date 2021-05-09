@@ -5,7 +5,7 @@ const userData = data.users;
 const bcrypt = require('bcryptjs');
 
 router.get('/', async (req,res)=>{
-    console.log(req.session);
+    //console.log(req.session);
     if(!req.session.user){
         res.render('login',{title:"Log in", haserror:false, haserror2:false,hidelogin:true,hidereg:false});
     } else{
@@ -21,9 +21,9 @@ router.post('/login', async (req,res) =>{
     let validuser = false;
     let user = {};
     const userlist = await userData.getAll();
-    console.log(userlist);
+    //console.log(userlist);
     for (x of userlist){
-        console.log(x.password);
+        //console.log(x.password);
         const hashpw = await bcrypt.compare(logindata.password, x.password);
         //console.log(hashpw);
         if(hashpw && x.userName===logindata.username){
@@ -41,7 +41,7 @@ router.post('/login', async (req,res) =>{
     }
     try{
         req.session.user = user;
-        console.log(req.session);
+        //console.log(req.session);
         res.redirect('/');
     } catch(e){
         console.log(e);
