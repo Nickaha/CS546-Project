@@ -3,7 +3,7 @@ const comments = mongoCollections.comments;
 const listings = require('./listings');
 const uuid = require('uuid');
 
-async function createComment(name, comment){
+async function createComment(name, comment, listingid){
     if(!name) throw "name needs to be provided";
     if(typeof name !== 'string') throw 'name needs to be string';
     if(name.trim().length===0) throw 'name can not be empty';
@@ -13,10 +13,15 @@ async function createComment(name, comment){
     if(comment.trim().length===0) throw 'comment can not be empty';
 
     const commentCollection = await comments();
+    // Listing info for updating listing with new comments. 
+    const listingObject = await listings.getLisingById(listingid);
+    let listingComments = listingObject.comments;
+
     const newComment = {
         _id:uuid.v4(),
         name: name,
-        comment:comment
+        comment:comment,
+        listid: listingid
     };
 
     const insertInfo = await commentCollection.insertOne(newComment);
@@ -26,6 +31,9 @@ async function createComment(name, comment){
     //console.log(newId);
     const rv = await this.getCommentById(newId.toString());
     rv._id = rv._id.toString();
+    // Add to subdocument as well and updatelisting.
+    listingComments.append(newComment);
+    await listings.updateListing(listid, {bids:listingComments});
     return rv;
 }
 

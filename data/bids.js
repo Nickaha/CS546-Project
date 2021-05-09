@@ -44,6 +44,8 @@ async function createBid(username, bid, listid){
             x.highestBid = false;
         });
     }
+    // Add to subdocument and update listing.
+    bidoflist.append(newBid);
     await listings.updateListing(listid, {bids:bidoflist});
     return rv;
 }
