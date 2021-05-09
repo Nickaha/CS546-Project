@@ -17,7 +17,9 @@ async function main(){
     //https://en.wikipedia.org/wiki/Image where the image is from
     const listing1 = await listings.createListing('05/02/2021', '05/12/2021', 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1200px-Image_created_with_a_mobile_phone.png',
     'Man with phone older than himself');
-
+    //https://i.imgur.com/qbUNEC5.jpg
+    const listing2 = await listings.createListing('05/02/2021', '05/12/2021', 'https://i.imgur.com/qbUNEC5.jpg',
+    'Juicy Steak');
     const sally = await users.createUser('Sally', 'Lee', 'sallylee', 'sally@lee.com', 'Canada', 29, 'superpassword!', '0000111122223333');
     const sallyid = sally._id;
     await bids.createBid(sallylee, 50, listing1._id);
