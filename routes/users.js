@@ -5,6 +5,7 @@ const userData = data.users;
 const bcrypt = require('bcryptjs');
 
 router.get('/', async (req,res)=>{
+    console.log(req.session);
     if(!req.session.user){
         res.render('login',{title:"Log in"});
     } else{
@@ -20,9 +21,12 @@ router.post('/login', async (req,res) =>{
     let validuser = false;
     let user = {};
     const userlist = await userData.getAll();
+    console.log(userlist);
     for (x of userlist){
+        console.log(x.password);
         const hashpw = await bcrypt.compare(logindata.password, x.password);
-        if(hashpw && x.username===logindata.username){
+        //console.log(hashpw);
+        if(hashpw && x.userName===logindata.username){
             validuser= true;
             //Whole user is stored in session currently - Should we remove hashed passwords from the cookie?
             user = x;
@@ -37,6 +41,7 @@ router.post('/login', async (req,res) =>{
     }
     try{
         req.session.user = user;
+        console.log(req.session);
         res.redirect('/');
     } catch(e){
         console.log(e);

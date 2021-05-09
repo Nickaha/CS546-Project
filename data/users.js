@@ -35,18 +35,20 @@ async function createUser(firstName, lastName, userName, email, country, age, pa
     const userBids = [];
 
     const userCollection = await users();
+    const hashbankinfo = await bcrypt.hash(BankInfo,16);
+    const hashpw = await bcrypt.hash(password,16);
     let newUser = {
         _id:uuid.v4(),
         firstName:firstName,
         lastName:lastName,
-        userName:lastName,
+        userName:userName,
         email:email,
         age:age,
         country:country,
-        BankInfo:bcrypt.hash(BankInfo,16),
+        BankInfo:hashbankinfo,
         userBids:userBids,
         userListings:userListings,
-        password: bcrypt.hash(password,16)
+        password: hashpw
     };
     const insertInfo = await userCollection.insertOne(newUser);
     if (insertInfo.insertedCount === 0) throw 'Could not add user';
