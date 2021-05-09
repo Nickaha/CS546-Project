@@ -7,8 +7,8 @@
             <p>{{NFT.highestbid}}</p>
             <ul id = "comments">
             {{#each NFT.comments}}
-            <li>
-                {{this}}
+            <li id={{this.s_id}}> <!--This is necessary for targeting specific elements based on id.--> 
+                {{this.comment}}
             </li>
             {{/each}}
             </ul>

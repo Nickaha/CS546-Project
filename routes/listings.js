@@ -3,6 +3,7 @@ const router = express.Router();
 const data = require('../data');
 const listingData = data.listings;
 const bcrypt = require('bcryptjs');
+let { ObjectId } = require('mongodb');
 
 router.get('/', async (req,res)=>{
     if(!req.session.user){
@@ -23,7 +24,13 @@ router.get('/:id', async (req,res)=>{
     } else {
         try{
             const listinginfo = await listingData.getLisingById(req.params.id);
-            res.render('listing', {listinglist:listinginfo});
+            // Need to add id strings to the comments
+            for (let i = 0; i < listinginfo.comments.length; i++){
+                //Convert the ObjectId to a string for usage in HTML id.
+                listinginfo.comments[i].s_id = listinginfo.comments[i]._id.valueOf();
+            }
+
+            res.render('NFT', {NFT:listinginfo});
         } catch(e){
             res.status(401).render('listings',{error:e, haserror:true});
         }
