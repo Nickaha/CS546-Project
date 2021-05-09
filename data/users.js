@@ -25,7 +25,8 @@ async function createUser(firstName, lastName, userName, email, country, age, pa
     if(age<18) throw 'age needs to be greather than 18 at least';
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if(!re.test(String(email).toLowerCase())) throw "invalid email type";
-    const userlists = this.getAll();
+    const userlists = await this.getAll();
+    console.log(userlists);
     userlists.forEach(x => {
         if(userName === x.userName) throw `username has already been used`;
         if(email === x.email) throw `email is used by someone`;

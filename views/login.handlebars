@@ -8,9 +8,10 @@
         <input id="password" type="password" name="password"/><br>
 
         <button type="submit">Login</button>
+        <button type="button" id = "regis">Register for account</button>
     </form>
     
-    <button type="button">Register for account</button>
+    
     <div id="error-container" hidden>
         {{#each error}}
         <p>{{this}}</p>
@@ -45,6 +46,7 @@
         <input id="password2" type="password" name="password2"/><br>
 
         <button type="submit">Register</button>
+        <button type="button" id="loginb">Have an account? Log in here!</button>
     </form>
     <div id="error-container2" hidden>
         {{#each error}}
