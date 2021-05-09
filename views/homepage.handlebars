@@ -8,10 +8,10 @@
     </div>
 
     <h1>NFT Marketplace</h1>
-
+    {{#if NFT}}
     {{#each NFT}}
     <div class="card" style="width: 18rem;">
-        <a href=""><img class="card-img-top" src= {{this.image}} alt="NFT image"></a>
+        <a href={{this.url}}><img class="card-img-top" src= {{this.image}} alt="NFT image"></a>
         <div class="card-body">
             <h4 class="card-title"><b>{{this.expire}}</b></h4>
             <p>{{this.user}}</p>
@@ -20,4 +20,5 @@
         </div>
     </div>
     {{/each}}
+    {{/if}}
 </main>
