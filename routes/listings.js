@@ -30,7 +30,7 @@ router.get('/', async (req,res)=>{
                     highestbid: maxbid
                 });
             });
-            res.render('listings', {NFT:renderData});
+            res.render('listings', {title: "Your Listings", NFT:renderData});
         } catch(e){
             res.status(401).render('listings',{error:e, haserror:true});
         }
@@ -48,8 +48,14 @@ router.get('/:id', async (req,res)=>{
                 //Convert the ObjectId to a string for usage in HTML id.
                 listinginfo.comments[i].s_id = listinginfo.comments[i]._id.valueOf();
             }
-
-            res.render('NFT', {NFT:listinginfo});
+            let maxbid = 0;
+            listinginfo.bids.forEach(bid => {
+                if (bid.bid > maxbid){
+                    maxbid = bid.bid;
+                }
+            });
+            listinginfo.highestbid = maxbid;
+            res.render('NFT', {title: "NFT Listing: " + listinginfo.description, NFT:listinginfo});
         } catch(e){
             res.status(401).render('listings',{error:e, haserror:true});
         }
