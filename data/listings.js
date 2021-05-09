@@ -109,6 +109,7 @@ async function updateListing(id, updateInfo){
         });
         updateList.bids = updateInfo.bids;
     }
+    const listingCollection = await listings();
     await listingCollection.updateOne({_id:id},{$set:updateList});
     let result = await this.getLisingById(id);
     return result;

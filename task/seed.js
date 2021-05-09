@@ -20,7 +20,7 @@ async function main(){
     console.log(listing1)
     const sally = await users.createUser('Sally', 'Lee', 'sallylee', 'sally@lee.com', 'Canada', 29, 'superpassword!', '0000111122223333');
     const sallyid = sally._id;
-    await bids.createBid(sallylee, 50, listing1._id);
+    await bids.createBid("sallylee", 50, listing1._id);
     const sallyname = sally.firstName + sally.lastName;
     await comments.createComment(sallyname, 'This make me feel young, I think this phone is even older than me!');
     

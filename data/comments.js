@@ -19,9 +19,9 @@ async function createComment(name, comment){
         comment:comment
     };
 
-    const insertInfo = commentCollection.insertOne(newComment);
+    const insertInfo = await commentCollection.insertOne(newComment);
     if (insertInfo.insertedCount === 0) throw 'Could not add comment';
-
+    //console.log(insertInfo);
     const newId = insertInfo.insertedId;
     //console.log(newId);
     const rv = await this.getCommentById(newId.toString());

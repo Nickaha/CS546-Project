@@ -13,7 +13,7 @@ async function createBid(username, bid, listid){
     if(typeof bid !== 'number' || isNaN(bid)) throw 'bid needs to be number';
 
     const bidCollection = await bids();
-    const bidlist = listings.getLisingById(listid);
+    const bidlist =  await listings.getLisingById(listid);
     const bidoflist = bidlist.bids;
     let maxbid = 0;
     bidoflist.forEach(x => {
