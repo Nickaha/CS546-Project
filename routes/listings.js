@@ -3,7 +3,6 @@ const router = express.Router();
 const data = require('../data');
 const listingData = data.listings;
 const bcrypt = require('bcryptjs');
-let { ObjectId } = require('mongodb');
 
 router.get('/', async (req,res)=>{
     if(!req.session.user){
