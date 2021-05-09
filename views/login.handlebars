@@ -11,12 +11,11 @@
         <button type="button" id = "regis">Register for account</button>
     </form>
     
-    
-    <div id="error-container" hidden>
-        {{#each error}}
-        <p>{{this}}</p>
-        {{/each}}
+    {{#if haserror}}
+    <div id="error-container">
+        <p>Invalid username or password.</p>
     </div>
+    {{/if}}
     <form id="register-form" method="post" action="/user/register" hidden>
         <label for="username">Set Username</label><br>
         <input id="username" type="text" name="username"/><br>
@@ -48,9 +47,11 @@
         <button type="submit">Register</button>
         <button type="button" id="loginb">Have an account? Log in here!</button>
     </form>
+    {{#if haserror2}}
     <div id="error-container2" hidden>
-        {{#each error}}
+        {{#each errors}}
         <p>{{this}}</p>
         {{/each}}
     </div>
+    {{/if}}
 </main>
