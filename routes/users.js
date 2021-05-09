@@ -7,7 +7,7 @@ const bcrypt = require('bcryptjs');
 router.get('/', async (req,res)=>{
     console.log(req.session);
     if(!req.session.user){
-        res.render('login',{title:"Log in"});
+        res.render('login',{title:"Log in", haserror:false, haserror2:false});
     } else{
         res.render('homepage',{title:"Home Page"});
     }
@@ -36,7 +36,7 @@ router.post('/login', async (req,res) =>{
         errors.push('Username or password not correct');
     }
     if(errors.length>0){
-        res.status(401).render('login',{errors:errors, hasserror:true, title:'Log in'});
+        res.status(401).render('login',{errors:errors, haserror:true, title:'Log in', haserror2:false});
         return;
     }
     try{
@@ -65,7 +65,7 @@ router.post('/register', async (req,res)=>{
 
     if(registedata.password1!==registedata.password2) errors.push('passwords are not same when re-enter');
     if(errors.length>0){
-        res.status(401).render('login',{errors:errors, hasserror:true, title:'Log in',register:true});
+        res.status(401).render('login',{errors:errors, haserror:false, title:'Log in', haserror2:true});
         return;
     }
     try{
@@ -74,7 +74,7 @@ router.post('/register', async (req,res)=>{
         res.redirect('/');
     } catch(e){
         errors.push(e);
-        res.status(401).render('login',{errors:errors, hasserror:true, title:'Log in', register:true});
+        res.status(401).render('login',{errors:errors, haserror:false, title:'Log in', haserror2:true});
     }
 });
 
@@ -86,7 +86,7 @@ router.post('/changepw',async(req,res)=>{
     if(!changedata.password2) errors.push("re-enter new password is not provided");
     if(changedata.password1 === changedata.password2) errors.push("password doesn't match");
     if(errors.length>0){
-        res.status(401).render('accountdashboard',{errors:errors, hasserror:true, title:'Dash Board'});
+        res.status(401).render('accountdashboard',{errors:errors, haserror:true, title:'Dash Board'});
         return;
     }
     try{
@@ -95,7 +95,7 @@ router.post('/changepw',async(req,res)=>{
         res.redirect('/');
     } catch(e){
         errors.push(e);
-        res.status(401).render('accountdashbaord',{errors:[e], hasserror:true, title:'Dash Board'});
+        res.status(401).render('accountdashbaord',{errors:[e], haserror:true, title:'Dash Board'});
     }
 });
 
