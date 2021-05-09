@@ -1,6 +1,6 @@
 <main>
 
-    <form id="login-form" method="post" action="/user/login">
+    <form id="login-form" method="post" action="/user/login" {{hidden1}}>
         <label for="username">Username</label><br>
         <input id="username" type="text" name="username"/><br>
 
@@ -16,7 +16,7 @@
         <p>Invalid username or password.</p>
     </div>
     {{/if}}
-    <form id="register-form" method="post" action="/user/register" hidden>
+    <form id="register-form" method="post" action="/user/register" {{hidden2}}>
         <label for="username">Set Username</label><br>
         <input id="username" type="text" name="username"/><br>
 

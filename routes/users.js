@@ -52,8 +52,8 @@ router.post('/login', async (req,res) =>{
 router.post('/register', async (req,res)=>{
     let registedata = req.body;
     let errors = [];
-    if(!registedata.firstname) errors.push('firstname is not provided');
-    if(!registedata.lastname) errors.push('lastname is not provided');
+    if(!registedata.first) errors.push('firstname is not provided');
+    if(!registedata.last) errors.push('lastname is not provided');
     if(!registedata.username) errors.push('username is not provided');
     if(!registedata.email) errors.push('email is not provided');
     if(!registedata.age) errors.push('age is not provided');
@@ -62,14 +62,13 @@ router.post('/register', async (req,res)=>{
     if(!registedata.bank) errors.push('bank information is not provided');
     if(!registedata.password1) errors.push('password is not provided');
     if(!registedata.password2) errors.push('password re-enter is not provided');
-
     if(registedata.password1!==registedata.password2) errors.push('passwords are not same when re-enter');
     if(errors.length>0){
         res.status(401).render('login',{errors:errors, haserror:false, title:'Log in', haserror2:true});
         return;
     }
     try{
-        const newuser = userData.createUser(registedata.firstname, registedata.lastname, registedata.username, registedata.email, registedata.country, registedata.age, registedata.password1, registedata.bank);
+        const newuser = await userData.createUser(registedata.first, registedata.last, registedata.username, registedata.email, registedata.country, parseInt(registedata.age), registedata.password1, registedata.bank);
         req.session.user = newuser;
         res.redirect('/');
     } catch(e){
