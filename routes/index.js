@@ -6,7 +6,7 @@ const path = require('path');
 const constructorMethod = (app) => {
   app.use('/user', userRoute);
   app.use('/listing',listingRoute);
-  app.use('/bid',bidRoute);
+  app.use('/bids',bidRoute);
 
   app.get('/aboutus', (req,res) =>{
     res.render('aboutus',{title:'About Us'});

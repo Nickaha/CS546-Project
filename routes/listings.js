@@ -9,9 +9,28 @@ router.get('/', async (req,res)=>{
         res.render('login',{title:"Log in"});
     } else{
         try{
+
             const listinglist = await listingData.getallofuser(req.session.user._id);
-            console.log(listinglist);
-            res.render('listings', {NFT:listinglist});
+            
+            // Since the handlebars view doesn't use the same variable names, we rename.
+            let renderData = [];
+            listinglist.forEach(listing => {
+                // Also need to calculate maximum bid.
+                let maxbid = 0;
+                listing.bids.forEach(bid => {
+                    if (bid.bid > maxbid){
+                        maxbid = bid.bid;
+                    }
+                });
+                renderData.push({
+                    url: '/listing/'+listing._id,
+                    image: listing.URL,
+                    expire: listing.endDate,
+                    desc: listing.description,
+                    highestbid: maxbid
+                });
+            });
+            res.render('listings', {NFT:renderData});
         } catch(e){
             res.status(401).render('listings',{error:e, haserror:true});
         }
