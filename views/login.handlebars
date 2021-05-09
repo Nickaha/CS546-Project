@@ -1,21 +1,23 @@
 <main>
-    <form id="login-form" method="post" action="/user/login">
-        <label for="username">Username</label><br>
-        <input id="username" type="text" name="username"/><br>
+    {{#if hidelogin}}
+        <form id="login-form" method="post" action="/user/login">
+            <label for="username">Username</label><br>
+            <input id="username" type="text" name="username"/><br>
 
-        <label for="password">Password</label><br>
-        <input id="password" type="password" name="password"/><br>
+            <label for="password">Password</label><br>
+            <input id="password" type="password" name="password"/><br>
 
-        <button type="submit">Login</button>
-        <button type="button" id = "regis">Register for account</button>
-        {{#if haserror}}
-        <div id="error-container">
-        <p>Invalid username or password.</p>
-        </div>
-        {{/if}}
-    </form>
-
-    <form id="register-form" method="post" action="/user/register" hidden>
+            <button type="submit">Login</button>
+            <button type="button" id = "regis">Register for account</button>
+            {{#if haserror}}
+            <div id="error-container">
+            <p>Invalid username or password.</p>
+            </div>
+            {{/if}}
+        </form>
+    {{/if}}
+    {{#if hidereg}}
+    <form id="register-form" method="post" action="/user/register">
         <label for="username">Set Username</label><br>
         <input id="username" type="text" name="username"/><br>
 
@@ -53,5 +55,5 @@
         </div>
         {{/if}}
     </form>
-
+    {{/if}}
 </main>

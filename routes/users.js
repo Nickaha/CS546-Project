@@ -7,7 +7,7 @@ const bcrypt = require('bcryptjs');
 router.get('/', async (req,res)=>{
     console.log(req.session);
     if(!req.session.user){
-        res.render('login',{title:"Log in", haserror:false, haserror2:false});
+        res.render('login',{title:"Log in", haserror:false, haserror2:false,hidelogin:true,hidereg:false});
     } else{
         res.render('homepage',{title:"Home Page"});
     }
@@ -36,7 +36,7 @@ router.post('/login', async (req,res) =>{
         errors.push('Username or password not correct');
     }
     if(errors.length>0){
-        res.status(401).render('login',{errors:errors, haserror:true, title:'Log in', haserror2:false});
+        res.status(401).render('login',{errors:errors, haserror:true, title:'Log in', haserror2:false,hidelogin:true,hidereg:false});
         return;
     }
     try{
@@ -64,16 +64,16 @@ router.post('/register', async (req,res)=>{
     if(!registedata.password2) errors.push('password re-enter is not provided');
     if(registedata.password1!==registedata.password2) errors.push('passwords are not same when re-enter');
     if(errors.length>0){
-        res.status(401).render('login',{errors:errors, haserror:false, title:'Log in', haserror2:true});
+        res.status(401).render('login',{errors:errors, haserror:false, title:'Log in', haserror2:true,hidelogin:false,hidereg:true});
         return;
     }
     try{
         const newuser = await userData.createUser(registedata.first, registedata.last, registedata.username, registedata.email, registedata.country, parseInt(registedata.age), registedata.password1, registedata.bank);
         req.session.user = newuser;
-        res.redirect('/');
+        res.redirect('/user/register');
     } catch(e){
         errors.push(e);
-        res.status(401).render('login',{errors:errors, haserror:false, title:'Log in', haserror2:true});
+        res.status(401).render('login',{errors:errors, haserror:false, title:'Log in', haserror2:true,hidelogin:false,hidereg:true});
     }
 });
 
@@ -97,7 +97,14 @@ router.post('/changepw',async(req,res)=>{
         res.status(401).render('accountdashbaord',{errors:[e], haserror:true, title:'Dash Board'});
     }
 });
-
+router.get('/register', async(req,res)=>{
+    //console.log(req.session);
+    if(!req.session.user){
+        res.render('login',{title:"Log in", haserror:false, haserror2:false, hidelogin:false,hidereg:true});
+    } else{
+        res.render('homepage',{title:"Home Page"});
+    }
+});
 router.get('/dashboard',async (req,res)=>{
     if(!req.session.user){
         res.redirect('/');

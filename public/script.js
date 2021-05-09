@@ -4,12 +4,11 @@
         registerform = $('#register-form'),
         reg_log = $('#loginb');
     log_reg.click(function(){
-        loginform.attr("hidden",true);
-        registerform.attr("hidden",false);
+        window.location.assign('/user/register');
     });
 
     reg_log.click(function(){
-        loginform.attr("hidden",false);
-        registerform.attr("hidden",true);
+        window.location.assign('/');
     });
+
 })(window.jQuery);
