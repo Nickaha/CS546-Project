@@ -63,6 +63,7 @@ router.post('/register', async (req,res)=>{
     if(!registedata.password1) errors.push('password is not provided');
     if(!registedata.password2) errors.push('password re-enter is not provided');
     if(registedata.password1!==registedata.password2) errors.push('passwords are not same when re-enter');
+    if(parseInt(registedata.age) < 18) errors.push('age must be >= 18');
     if(errors.length>0){
         res.status(401).render('login',{errors:errors, haserror:false, title:'Log in', haserror2:true,hidelogin:false,hidereg:true});
         return;
