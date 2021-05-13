@@ -126,7 +126,7 @@ async function updateUser(id, updateInfo){
     }
     if(updateInfo.BankInfo){
         if(typeof updateInfo.BankInfo !== 'string' || updateInfo.BankInfo.trim().length===0) throw `Bank information should be string and not all spaces`;
-        userUpdate.BankInfo = bcyrpt.hash(updateInfo.BankInfo,16);
+        userUpdate.BankInfo = await bcyrpt.hash(updateInfo.BankInfo,16);
     }
     if(updateInfo.userBids){
         if(!Array.isArray(updateInfo.userBids)) throw `userBids should be array`;
@@ -144,7 +144,7 @@ async function updateUser(id, updateInfo){
     }
     if(updateInfo.password){
         if(typeof updateInfo.password !== 'string' || updateInfo.password.trim().length===0) throw `password should be string and not all spaces`;
-        userUpdate.password = updateInfo.bcrypt.hash(password,16);
+        userUpdate.password = await bcrypt.hash(updateInfo.password,16);
     }
 
     await userCollection.updateOne({_id:id},{$set: userUpdate});

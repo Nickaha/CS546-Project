@@ -31,6 +31,10 @@ async function createListing(postDate, endDate, url, description){
     if(description.trim().length===0) throw 'description can not be empty';
 
     const listingCollection = await listings();
+    const alllisting = await this.getAll();
+    alllisting.forEach(x => {
+        if(url===x.URL) throw "The URL has been used before";
+    });
 
     const comments = [];
     const bids = [];

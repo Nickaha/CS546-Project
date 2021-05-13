@@ -79,9 +79,9 @@ router.post('/',async (req,res)=>{
 
         today = mm + '/' + dd + '/' + yyyy;
         const newlisting = await listingData.createListing(today, nftdata.expdate, nftdata.url, nftdata.description);
-        res.render('listing',{listinginfo:newlisting});
+        res.redirect('/');
     }catch(e){
-        res.status(401).render('listings',{error:e, haserror:true});
+        res.status(401).render('postNFT',{errors:[e], haserror:true,title:"create NFT"});
     }
 });
 

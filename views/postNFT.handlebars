@@ -8,6 +8,13 @@
         </div>
     </nav>
     <h1>Create a NFT to Sell</h1>
+    {{#if haserror}}
+    <div class="error">
+    {{#each errors}}
+    <p>{{this}}</p>
+    {{/each}}
+    </div>
+    {{/if}}
     <form method="post" action="/listing">
         <label for="url">Enter URL</label><br>
         <input id="url" type="text" name="url"/><br>

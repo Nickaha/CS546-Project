@@ -117,12 +117,12 @@ router.post('/changepw',async(req,res)=>{
         return;
     }
     try{
-        const updateuser = userData.updateUser(req.session.user._id,{password:password1});
+        const updateuser = userData.updateUser(req.session.user._id,{password:changedata.password1});
         req.session.user = updateuser;
         res.redirect('/');
     } catch(e){
         errors.push(e);
-        res.status(401).render('accountdashbaord',{errors:[e], haserror:true, title:'Dash Board'});
+        res.status(401).render('changepassword',{errors:[e], haserror:true, title:'Change Password'});
     }
 });
 router.get('/changepw',async (req,res)=>{
