@@ -3,13 +3,38 @@ const router = express.Router();
 const data = require('../data');
 const userData = data.users;
 const bcrypt = require('bcryptjs');
-
+const listingData = data.listings;
 router.get('/', async (req,res)=>{
     //console.log(req.session);
     if(!req.session.user){
         res.render('login',{title:"Log in", haserror:false, haserror2:false,hidelogin:true,hidereg:false});
     } else{
-        res.render('homepage',{title:"Home Page"});
+        try{
+
+            const listinglist = await listingData.getAll();
+            
+            // Since the handlebars view doesn't use the same variable names, we rename.
+            let renderData = [];
+            listinglist.forEach(listing => {
+                // Also need to calculate maximum bid.
+                let maxbid = 0;
+                listing.bids.forEach(bid => {
+                    if (bid.bid > maxbid){
+                        maxbid = bid.bid;
+                    }
+                });
+                renderData.push({
+                    url: '/listing/'+listing._id,
+                    image: listing.URL,
+                    expire: listing.endDate,
+                    desc: listing.description,
+                    highestbid: maxbid
+                });
+            });
+            res.render('homepage',{title:"Home Page",NFT:renderData});
+        } catch(e){
+            res.status(401).render('homepage',{error:e, haserror:true});
+        }
     }
 });
 
@@ -81,12 +106,14 @@ router.post('/register', async (req,res)=>{
 router.post('/changepw',async(req,res)=>{
     let changedata = req.body;
     let errors=[];
+    //console.log(req.session.user);
     if(!changedata.username) errors.push('username is not provided');
     if(!changedata.password1) errors.push("new password is not provided");
     if(!changedata.password2) errors.push("re-enter new password is not provided");
-    if(changedata.password1 === changedata.password2) errors.push("password doesn't match");
+    if(changedata.password1 !== changedata.password2) errors.push("password doesn't match");
+    if(changedata.username !== req.session.user.userName) errors.push("Username not matching current user");
     if(errors.length>0){
-        res.status(401).render('accountdashboard',{errors:errors, haserror:true, title:'Dash Board'});
+        res.status(401).render('changepassword',{errors:errors, haserror:true, title:'Change Password'});
         return;
     }
     try{
@@ -96,6 +123,13 @@ router.post('/changepw',async(req,res)=>{
     } catch(e){
         errors.push(e);
         res.status(401).render('accountdashbaord',{errors:[e], haserror:true, title:'Dash Board'});
+    }
+});
+router.get('/changepw',async (req,res)=>{
+    if(!req.session.user){
+        res.render('login',{title:"Log in", haserror:false, haserror2:false, hidelogin:true,hidereg:false});
+    } else{
+        res.render('changepassword',{title:"Change Password"});
     }
 });
 router.get('/register', async(req,res)=>{
