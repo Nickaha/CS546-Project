@@ -9,7 +9,7 @@ router.post( '/:id', async (req, res) => {
     // Returns JSON for use with AJAX.
     // The idea is that we modify the DOM with JQuery after the request, but
     // on page reload the new post will also be fetched.
-    if (!req.session.user){
+    if (!xss(req.session.user)){
         return res.status(401).json({message: "Unauthorized."});
     }
 
