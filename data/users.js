@@ -148,7 +148,7 @@ async function updateUser(id, updateInfo){
     }
 
     await userCollection.updateOne({_id:id},{$set: userUpdate});
-    let result = this.getUserById(id);
+    let result = await this.getUserById(id);
     return result;
 }
 
