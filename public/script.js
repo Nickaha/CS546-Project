@@ -11,14 +11,15 @@
 
     // Get into each listing and add an event listener for the delete button.
     var listingRemoveButtons = $("div.card[id]").map(function(){
-        var id = "#"+ this.id;
+        let selector = "#"+ this.id;
+        let elem_id = this.id;
 
         $(this).find('.close-listing').click(function(){
             //Promp user if they're sure and then go on with the delete request.
             let result = window.confirm("Are you sure you want to delete your listing?");
             if (result){
                 let feedback = "Removal successful.";
-                $(id).remove();
+                $(selector).remove();
 
 
 
@@ -30,16 +31,36 @@
             //Promp user if they're sure and then go on with the delete request.
             let result = window.confirm("Are you sure you want to withdraw your bid?");
             if (result){
-                let feedback = "Bid successfully removed.";
-                $(id).remove();
+                let feedback = "AJAX unsuccessful.";
+                let success = true;
+                // DELETE to our server and see response.
+                //var origin   = window.location.origin; Returns base URL (https://example.com)
 
+                $.ajax({
+                    method: 'DELETE',
+                    url: window.location.origin +"/bids/"+elem_id,
+                    statusCode: {
+                        404: function(responseObject, textStatus, jqXHR) {
+                            // Successful response
+                            if (responseObject.message) feedback = responseObject.message;
+                            else feedback = "Deletion successful.";
+                        },
+                        503: function(responseObject, textStatus, errorThrown) {
+                            // Service Unavailable (503)
+                            if (responseObject.message) feedback = responseObject.message;
+                            else feedback = "Failure: Deletion failed.";
+                            success = false;
+                        } 
+                    }
+                });
 
-
+                //After our AJAX has had a response. 
+                if (success) $(selector).remove();
                 alert(feedback);
             }
         });
 
-        return id;
+        return selector;
     }).get();
     var bidcommentform = $('#bid-or-comment');
     bidcommentform.submit(function(event){
