@@ -1,26 +1,28 @@
 <main>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="navbar-nav">
             <a class="nav-item nav-link active" href="/user">Homepage</a>
             <a class="nav-item nav-link active" href="/user/dashboard">My dashboard</a>
             <a class="nav-item nav-link active" href="https://www.coindesk.com/price/bitcoin" target="_blank">Bitcoin Price</a>
-            <a class="nav-item nav-link active" href="/aboutus">About</a>
+            <a class="nav-item nav-link active" href="/aboutus">About Us</a>
             <a class="nav-item nav-link active" href="/user/logout">Logout</a>
         </div>
     </nav>
     <h1>My Listings</h1>
+    <div class="row h-100">
     {{#if NFT}}
     {{#each NFT}}
     <div id={{this.id}} class="card" style="width: 18rem;">
         <a href={{this.url}}><img class="card-img-top" src= {{this.image}} alt="NFT image"></a>
         <div class="card-body">
-            <h4 class="card-title"><b>Auction Ends: {{this.expire}}</b></h4>
+            <h2 class="card-title"><b>Auction Ends: {{this.expire}}</b></h2>
             <p>{{this.desc}}</p>
             <p>Highest Bid: {{this.highestbid}}</p>
             <button class="close-listing">End Listing</button>
         </div>
     </div>
     {{/each}}
+    </div>
     {{else}}
     <div>No current listings</div>
     {{/if}}

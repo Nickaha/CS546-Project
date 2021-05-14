@@ -122,3 +122,11 @@ label {
 	margin-left: 160px;
   	padding: 0px 10px;
 }
+
+.card-title{
+	font-size: large;
+}
+
+#logu {
+	color: navy;
+}
