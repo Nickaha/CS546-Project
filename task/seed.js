@@ -25,7 +25,7 @@ async function main(){
     sally.userBids.push(newbid._id);
     const res = await users.updateUser(sallyid,{userBids:sally.userBids});
     //console.log(res);
-    const sallyname = sally.firstName + sally.lastName;
+    const sallyname = sally.userName; // This is the format the site follows
     const newcomment = await comments.createComment(sallyname, 'This make me feel young, I think this phone is even older than me!',listing1._id);
     // listing1.comments.push(newcomment);
     // const res2 = await listings.updateListing(listing1._id,{comments:listing1.comments});
