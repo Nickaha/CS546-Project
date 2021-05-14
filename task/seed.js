@@ -21,7 +21,7 @@ async function main(){
     const sally = await users.createUser('Sally', 'Lee', 'sallylee', 'sally@lee.com', 'Canada', 29, 'superpassword!', '0000111122223333');
     
     const sallyid = sally._id;
-    const newbid = await bids.createBid("sallylee", 50, listing1._id);
+    const newbid = await bids.createBid("jimbosmith", 50, listing1._id, sallyid);
     sally.userBids.push(newbid._id);
     const res = await users.updateUser(sallyid,{userBids:sally.userBids});
     //console.log(res);
