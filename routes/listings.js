@@ -4,6 +4,7 @@ const data = require('../data');
 const listingData = data.listings;
 const userData = data.users;
 const bcrypt = require('bcryptjs');
+const xss = require('xss');
 
 router.get('/', async (req,res)=>{
     if(!req.session.user){

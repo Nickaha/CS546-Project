@@ -3,6 +3,7 @@ const router = express.Router();
 const data = require('../data');
 const bidData = data.bids;
 const listingData = data.listings;
+const xss = require('xss');
 
 router.get( '/', async (req, res) =>{
     if (!req.session.user){
@@ -45,7 +46,8 @@ router.get( '/', async (req, res) =>{
                     expire: listing.endDate,
                     desc: listing.description,
                     highestbid: topBid,
-                    mybid: myBid.bid
+                    mybid: myBid.bid,
+                    myBidTop: (myBid.bid === topBid)
                 });
             }
             res.render('bids', {title: "Your Bids", NFT: bidListings}); 
@@ -65,7 +67,7 @@ router.post('/:id', async (req, res) => {
         return res.status(401).json({message: "Unauthorized."});
     }
     let listid = req.params.id;
-    const bid = req.body.bid; // POST body MUST contain attribute "bid"!
+    const bid = xss(req.body.bid); // POST body MUST contain attribute "bid"!
     const username = req.session.user.userName;
     const userId = req.session.user._id;
 
