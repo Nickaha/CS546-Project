@@ -3,6 +3,7 @@ const listingRoute = require('./listings');
 const bidRoute = require('./bids');
 const nftroute = require('./nft');
 const path = require('path');
+const xss = require('xss');
 
 const constructorMethod = (app) => {
   app.use('/user', userRoute);

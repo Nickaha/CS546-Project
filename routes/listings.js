@@ -5,14 +5,15 @@ const listingData = data.listings;
 const userData = data.users;
 let { ObjectId } = require('mongodb');
 const bcrypt = require('bcryptjs');
+const xss = require('xss');
 
 router.get('/', async (req,res)=>{
-    if(!req.session.user){
+    if(!xss(req.session.user)){
         res.render('login',{title:"Log in", haserror:false, haserror2:false,hidelogin:true,hidereg:false});
     } else{
         try{
 
-            const listinglist = await listingData.getallofuser(req.session.user._id);
+            const listinglist = await listingData.getallofuser(xss(req.session.user._id));
             
             // Since the handlebars view doesn't use the same variable names, we rename.
             let renderData = [];
@@ -41,11 +42,11 @@ router.get('/', async (req,res)=>{
 });
 
 router.get('/:id', async (req,res)=>{
-    if(!req.session.user){
+    if(!xss(req.session.user)){
         res.render('login', {title:"Log in"});
     } else {
         try{
-            const listinginfo = await listingData.getLisingById(req.params.id);
+            const listinginfo = await listingData.getLisingById(xss(req.params.id));
             // Need to add id strings to the comments
             for (let i = 0; i < listinginfo.comments.length; i++){
                 //Convert the ObjectId to a string for usage in HTML id.
@@ -66,11 +67,11 @@ router.get('/:id', async (req,res)=>{
 });
 
 router.post('/',async (req,res)=>{
-    if(!req.session.user){
+    if(!xss(req.session.user)){
         return res.render('login',{title:"Log in", haserror:false, haserror2:false,hidelogin:true,hidereg:false});
     }
     
-    let nftdata = req.body;
+    let nftdata = xss(req.body);
     let errors=[];
     if(!nftdata.url) errors.push('url is not provided');
     if(!nftdata.description) errors.push('description is not provided');
@@ -87,10 +88,10 @@ router.post('/',async (req,res)=>{
         today = mm + '/' + dd + '/' + yyyy;
         const newlisting = await listingData.createListing(today, nftdata.expdate, nftdata.url, nftdata.description);
         // Add Listing to User sub-collection.
-        let currentUser = await userData.getUserById(req.session.user._id);
+        let currentUser = await userData.getUserById(xss(req.session.user._id));
         currentUser.userListings.push(newlisting._id);
         let updateInfo = {userListings: currentUser.userListings};
-        const update = await userData.updateUser(req.session.user._id, updateInfo);
+        const update = await userData.updateUser(xss(req.session.user._id), updateInfo);
         res.redirect('/');
     }catch(e){
         res.status(401).render('postNFT',{errors:[e], haserror:true,title:"create NFT"});
