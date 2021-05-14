@@ -3,6 +3,7 @@ const router = express.Router();
 const data = require('../data');
 const commentData = data.comments;
 const listingData = data.listings;
+const xss = require('xss');
 
 // POST
 router.post( '/:id', async (req, res) => {
@@ -14,7 +15,7 @@ router.post( '/:id', async (req, res) => {
     }
 
     const listid = req.params.id;
-    const comment = req.body.comment; // POST body MUST have attribute "comment"!
+    const comment = xss(req.body.comment); // POST body MUST have attribute "comment"!
     const username = req.session.user.userName;
 
     if (listid === undefined || listid === ""){

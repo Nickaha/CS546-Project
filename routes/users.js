@@ -101,7 +101,7 @@ router.post('/register', async (req,res)=>{
     try{
         const newuser = await userData.createUser(registedata.first, registedata.last, registedata.username, registedata.email, registedata.country, parseInt(registedata.age), registedata.password1, registedata.bank);
         req.session.user = newuser;
-        res.redirect('/user/register');
+        res.redirect('/');
     } catch(e){
         errors.push(e);
         res.status(401).render('login',{errors:errors, haserror:false, title:'Log in', haserror2:true,hidelogin:false,hidereg:true});
