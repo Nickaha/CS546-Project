@@ -169,7 +169,7 @@ async function removeBid(id){
     }
     const updateInfo = await userCollection.updateOne({_id:userId},{$pull:{userBids:id}});
     const user = await this.getUserById(userId);
-    console.log(user);
+    //console.log(user);
     if (!updateInfo.matchedCount && !updateInfo.modifiedCount){
         throw 'Update failed';
       }

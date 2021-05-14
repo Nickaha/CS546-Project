@@ -24,7 +24,7 @@ async function createBid(username, bid, listid, userid){
         }
     });
     let highestBid = true;
-    if(bid<maxbid){
+    if(bid<=maxbid){
         highestBid = false;
     }
     if(!highestBid) throw 'The current bid is not higher than the highest bid.';
@@ -41,7 +41,7 @@ async function createBid(username, bid, listid, userid){
     thislist.forEach(x =>{
         if(userbids.includes(x._id)) deletebids.push(x._id);
     });
-    console.log(deletebids);
+    //console.log(deletebids);
     for (x of deletebids){
         await this.deleteBid(x);
     }
@@ -58,11 +58,13 @@ async function createBid(username, bid, listid, userid){
             x.highestBid = false;
         });
     }
+    const newbidoflist = await this.getListingBids(listid);
+    const newbidoflist2 = await this.getUserBids(userid);
     // Add to subdocument and update listing.
-    bidoflist.push(newBid);
-    bidoflist2.push(newBid._id);
-    await listings.updateListing(listid, {bids:bidoflist});
-    await users.updateUser(userid,{userBids:bidoflist2});
+    newbidoflist.push(newBid);
+    newbidoflist2.push(newBid._id);
+    await listings.updateListing(listid, {bids:newbidoflist});
+    await users.updateUser(userid,{userBids:newbidoflist2});
     return rv;
 }
 

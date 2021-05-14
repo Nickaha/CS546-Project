@@ -32,8 +32,8 @@ async function main(){
     // // const res2 = await listings.updateListing(listing1._id,{comments:listing1.comments});
     // sally.userListings.push(listing1._id);
     // const res3 = await users.updateUser(sallyid,{userListings:sally.userListings});
-    // console.log('Done seeding database');
-    // await db.serverConfig.close();
+    console.log('Done seeding database');
+    await db.serverConfig.close();
 }
 
 
