@@ -15,11 +15,12 @@ function isURL(str) {
   }
 
 async function createListing(postDate, endDate, url, description){
+
     if(!postDate) throw `post date needs to provide`;
     if(typeof postDate !== 'string') throw `post date needs to be string`;
     if(isNaN(Date.parse(postDate))) throw `not a valid post date`;
 
-    if(!endDate) throw `post date needs to provide`;
+    if(!endDate) throw `end date needs to provide`;
     if(typeof endDate !== 'string') throw `end date needs to be string`;
     if(isNaN(Date.parse(endDate))) throw `not a valid end date`;
 
@@ -32,7 +33,9 @@ async function createListing(postDate, endDate, url, description){
     if(description.trim().length===0) throw 'description can not be empty';
 
     const listingCollection = await listings();
+
     const alllisting = await this.getAll();
+
     alllisting.forEach(x => {
         if(url===x.URL) throw "The URL has been used before";
     });
@@ -52,8 +55,9 @@ async function createListing(postDate, endDate, url, description){
     if (insertInfo.insertedCount === 0) throw 'Could not add listing';
 
     const newId = insertInfo.insertedId;
-    //console.log(newId);
+
     const rv = await this.getLisingById(newId.toString());
+
     rv._id = rv._id.toString();
     return rv;
 }
