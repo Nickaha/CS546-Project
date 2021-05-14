@@ -69,25 +69,27 @@
         var comment = $('#comment').val();
         var userid = $('#userid_bc').val();
         var listid = $('#listid').val();
-        if(bid !== null || bid !== undefined){
+        console.log(bid);
+        if(bid !== null && bid !== undefined && !isNaN(parseInt(bid)) && bid.trim().length!==0){
             var requestConfig = {
                 method:'POST',
                 url:'/bids/'+listid,
-                data: JSON.stringify({
-                    bid:bid
-                })
+                data: {
+                    bid:parseInt(bid)
+                }
             };
+            console.log(requestConfig);
             $.ajax(requestConfig).then(function(responseMessage){
                 window.location.assign(`/listing/${listid}`);
             });
         }
-        if(comment !== null || comment !== undefined){
+        if(comment !== null && comment !== undefined &&  comment.trim().length!==0){
             var requestConfig = {
                 method:'POST',
                 url:'/comment/'+listid,
-                data: JSON.stringify({
+                data: {
                     comment:comment
-                })
+                }
             };
             $.ajax(requestConfig).then(function(responseMessage){
                 window.location.assign(`/listing/${listid}`);
