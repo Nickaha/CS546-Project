@@ -17,7 +17,20 @@
             //Promp user if they're sure and then go on with the delete request.
             let result = window.confirm("Are you sure you want to delete your listing?");
             if (result){
-                let feedback = "Removal successful";
+                let feedback = "Removal successful.";
+                $(id).remove();
+
+
+
+                alert(feedback);
+            }
+        });
+
+        $(this).find('.close-bid').click(function(){
+            //Promp user if they're sure and then go on with the delete request.
+            let result = window.confirm("Are you sure you want to withdraw your bid?");
+            if (result){
+                let feedback = "Bid successfully removed.";
                 $(id).remove();
 
 
