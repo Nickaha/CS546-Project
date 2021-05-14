@@ -101,4 +101,47 @@ router.post('/',async (req,res)=>{
     }
 });
 
+router.delete('/:id', async (req, res) => {
+    // This route will not return HTML - it returns JSON and a status code.
+    // Will be called through AJAX on listing/bids pages.
+    // Check user authentication and data integrity.
+    if (!req.session.user){
+        return res.status(401).json({message: "Unauthorized."});
+    }
+    if (!req.session.user._id){
+        return res.status(500).json({message: "User ID missing from session."});
+    }
+
+    let listId = req.params.id;
+    const userListings = await listingData.getallofuser(req.session.user._id);
+
+    //Check that id is provided
+    if (listId === undefined || listId === ""){
+        return res.status(400).json({message: "List id missing."});
+    }
+
+    /* Only delete the bid if, after looping through user bids for the currently
+    authenticated user, bid of matching id is found. Otherwise, return with an error.
+     */ 
+    let found = false;
+    for (let i = 0; i < userListings.length; i++){
+        if (listId === userListings[i]._id){
+            found = true;
+        }
+    }
+    // Return error if no matching bid is found.
+    if (!found){
+        return res.status(403).json({message: "Listing ID not found or not authorized for current user."});
+    }
+
+    //return OK status and JSON if delete successful, otherwise 500 and JSON
+    try {
+        const deletion = await listingData.deleteListing(listId);
+        return res.status(200).json({message: "Listing successfully deleted."});
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({message: "Listing deletion failed."});
+    }
+});
+
 module.exports=router;

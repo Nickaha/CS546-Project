@@ -1,6 +1,8 @@
 const mongoCollections = require('../config/mongoCollections');
 const listings = mongoCollections.listings;
 const usercol = mongoCollections.users;
+const bidcol = mongoCollections.bids;
+const commcol = mongoCollections.comments;
 const users = require('./users');
 const uuid = require('uuid');
 
@@ -137,6 +139,42 @@ async function deleteListing(id){
     const listingCollection = await listings();
     const listing = await listingCollection.findOne({_id:id});
     if(listing===null) throw 'no listing with that id';
+
+    for (let i = 0; i < listing.bids.length; i++){
+        try {
+            //await bids.deleteBid(listing.bids[i]._id);
+            let bid_id = listing.bids[i]._id
+            // This is a hacky attempt to avoid a circular dependency error.
+            // This code is bids.deleteBid.
+            if(!bid_id) throw `no id provided`;
+            if(typeof bid_id !== 'string') throw `id is not string`;
+            if(bid_id.length === 0) throw `id is empty`;
+            const bidCollection = await bidcol();
+            const bid = await bidCollection.findOne({_id:bid_id});
+            if (bid===null) throw 'no bid with that id';
+            await this.removeBids(bid_id, bid.listid);
+            await users.removeBid(bid_id);
+            const deleteinfo = await bidCollection.deleteOne({ _id: bid_id });
+            if (deleteinfo.deletedCount === 0) {
+                throw `Could not delete bid with id of ${bid_id}`;
+            }
+        } catch (error) {
+            throw `Error: ${error}, during listing deletion for id ${id}`;
+        }
+        
+    }
+    for (let i = 0; i < listing.comments.length; i++){
+        try {
+            // Another hacky circular dependency fix.
+            //await comments.deleteComment(listing.comments[i]._id);
+            let comment_id = listing.comments[i]._id;
+            let commentCollection = await commcol();
+            await commentCollection.deleteOne( {_id: comment_id} );
+        } catch (error) {
+            throw `Error: ${error}, during listing deletion for id ${id}`;
+        }
+        
+    }
     await users.removeListing(id);
     const deleteinfo = await listingCollection.deleteOne({ _id: id });
     if (deleteinfo.deletedCount === 0) {

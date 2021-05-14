@@ -18,12 +18,16 @@
             //Promp user if they're sure and then go on with the delete request.
             let result = window.confirm("Are you sure you want to delete your listing?");
             if (result){
-                let feedback = "Removal successful.";
-                $(selector).remove();
-
-
-
-                alert(feedback);
+                $.ajax({
+                    method: 'DELETE',
+                    url: window.location.origin +"/listing/"+elem_id,
+                    success: function(data){
+                        $(selector).html("Deleted successfully.");
+                    },
+                    error: function(jqxhr) {
+                        alert( JSON.parse(jqxhr.responseText).message );
+                    }
+                });
             }
         });
 
@@ -38,9 +42,7 @@
                     method: 'DELETE',
                     url: window.location.origin +"/bids/"+elem_id,
                     success: function(data){
-                        console.log("haha")
-                        $(selector).remove();
-                        alert("Deletion successful.");
+                        $(selector).html("Withdrawn successfully.");
                     },
                     error: function(jqxhr) {
                         alert( JSON.parse(jqxhr.responseText).message );
@@ -70,13 +72,25 @@
                 url:'/bids/'+listid,
                 data: {
                     bid:parseInt(bid)
+                },
+                success: function(data){
+                    window.location.assign(`/listing/${listid}`);
+                },
+                error: function(jqxhr) {
+                    let error = JSON.parse(jqxhr.responseText).message;
+                    alert( error );
                 }
             };
+            $.ajax(requestConfig);
+
+
+            /*
             console.log(requestConfig);
             $.ajax(requestConfig).then(function(responseMessage){
                 console.log(responseMessage);
                 window.location.assign(`/listing/${listid}`);
             });
+            */
         }
         if(comment !== null && comment !== undefined &&  comment.trim().length!==0){
             var requestConfig = {
@@ -84,11 +98,19 @@
                 url:'/comment/'+listid,
                 data: {
                     comment:comment
+                },
+                success: function(data){
+                    window.location.assign(`/listing/${listid}`);
+                },
+                error: function(jqxhr) {
+                    let error = JSON.parse(jqxhr.responseText).message;
+                    alert( error );
                 }
             };
-            $.ajax(requestConfig).then(function(responseMessage){
+            $.ajax(requestConfig);
+            /*$.ajax(requestConfig).then(function(responseMessage){
                 window.location.assign(`/listing/${listid}`);
-            });
+            }); */
         }
     });
 })(window.jQuery);
