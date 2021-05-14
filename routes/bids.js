@@ -3,7 +3,6 @@ const router = express.Router();
 const data = require('../data');
 const bidData = data.bids;
 const listingData = data.listings;
-let { ObjectId } = require('mongodb');
 
 router.get( '/', async (req, res) =>{
     if (!req.session.user){
@@ -12,7 +11,7 @@ router.get( '/', async (req, res) =>{
         try {
             const user = req.session.user;
             // Fetch all the bids for that user.
-            const userBids = await bidData.getUserBids(user._id.valueOf());
+            const userBids = await bidData.getUserBids(user._id);
             //Get myBid onto the NFT listings, get highestBid as well.
             let bidListings = [];
             for (let i = 0; i < userBids.length; i++){
@@ -40,6 +39,7 @@ router.get( '/', async (req, res) =>{
     
                 // Get data into format for passing into handlebars
                 bidListings.push({
+                    id: userBids[i],
                     url: '/listing/'+listid,
                     image: listing.URL,
                     expire: listing.endDate,
@@ -81,20 +81,12 @@ router.post('/:id', async (req, res) => {
     } catch (error) {
         return res.status(400).json({message: error});
     }
-    //Convert listid to ObjectID.
-    try {
-        listid = ObjectId(listid);
-    } catch (error) {
-        return res.status(400).json({message: "Invalid Object ID."});
-    }
-    listid = ObjectId(listid);
-
     // After getting all our data, authenticate user to post to the bid. User cannot post to their own listing.
     
     const userListings = await listingData.getallofuser(userId);
     for (let i = 0; i < userListings.length; i++){
         // Verify that it is not the user's own bid.
-        if (listid.equals(userListings[i]._id)){
+        if (listid === userListings[i]._id){
             return res.status(403).json({message: "Forbidden: Cannot bid on own listing."});
         }
     }
@@ -125,21 +117,13 @@ router.delete('/:id', async (req, res) => {
     if (bidId === undefined || bidId === ""){
         return res.status(400).json({message: "Bid id missing."});
     }
-    
-    //Convert bidId to ObjectID.
-    try {
-        bidId = ObjectId(bidId);
-    } catch (error) {
-        return res.status(400).json({message: "Invalid Object ID."});
-    }
-    bidId = ObjectId(bidId);
 
     /* Only delete the bid if, after looping through user bids for the currently
     authenticated user, bid of matching id is found. Otherwise, return with an error.
      */ 
     let found = false;
     for (let i = 0; i < userBids.length; i++){
-        if ( bidId.equals(userBids[i]._id) ){
+        if ( bidId === userBids[i]._id ){
             found = true;
         }
     }
