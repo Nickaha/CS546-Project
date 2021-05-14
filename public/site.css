@@ -14,8 +14,8 @@ body {
 }
 
 main {
-	max-width: 75%;
-	margin: auto;
+	max-width: 100%;
+
 }
 
 header {
@@ -93,4 +93,3 @@ label {
 #error-container2 {
 	color: red;
 }
-
