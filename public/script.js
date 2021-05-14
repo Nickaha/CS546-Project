@@ -75,6 +75,7 @@
             };
             console.log(requestConfig);
             $.ajax(requestConfig).then(function(responseMessage){
+                console.log(responseMessage);
                 window.location.assign(`/listing/${listid}`);
             });
         }

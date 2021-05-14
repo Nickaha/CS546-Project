@@ -27,6 +27,7 @@ async function createBid(username, bid, listid, userid){
     if(bid<maxbid){
         highestBid = false;
     }
+    if(!highestBid) throw 'The current bid is not higher than the highest bid.';
     const newBid = {
         _id:uuid.v4(),
         username:username,

@@ -69,6 +69,7 @@ router.post('/',async (req,res)=>{
     }
     
     let nftdata = req.body;
+    //console.log(nftdata);
     let errors=[];
     if(!nftdata.url) errors.push('url is not provided');
     if(!nftdata.description) errors.push('description is not provided');
@@ -84,7 +85,6 @@ router.post('/',async (req,res)=>{
        
         
         today = mm + '/' + dd + '/' + yyyy;
-        
         const newlisting = await listingData.createListing(today, nftdata.datetime, nftdata.url, nftdata.description);
         // Add Listing to User sub-collection.
      
