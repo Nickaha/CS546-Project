@@ -198,7 +198,8 @@ async function removeBids(bid_id, list_id){
             break;
         }
     }
-
+    const u = await this.getLisingById(list_id);
+    console.log(u);
 
     return true;
 }

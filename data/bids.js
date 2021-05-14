@@ -35,6 +35,17 @@ async function createBid(username, bid, listid, userid){
         highestBid:highestBid,
         listid:listid
     };
+    let thislist = await this.getListingBids(listid);
+    let userbids = await this.getUserBids(userid);
+    let deletebids = [];
+    thislist.forEach(x =>{
+        if(userbids.includes(x._id)) deletebids.push(x._id);
+    });
+    console.log(deletebids);
+    for (x of deletebids){
+        await this.deleteBid(x);
+    }
+    
     const insertInfo = await bidCollection.insertOne(newBid);
     if (insertInfo.insertedCount === 0) throw 'Could not add bid';
 

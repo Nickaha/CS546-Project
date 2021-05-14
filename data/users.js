@@ -160,7 +160,7 @@ async function removeBid(id){
     const userCollection = await users();
     let userId = "";
     const userList = await userCollection.find({},{projection: {_id:1, userBids:1}}).toArray();
-    for (u of userList){
+    for (let u of userList){
         for(bid of u.userBids){
             if(bid === id){
                 userId = u._id;
@@ -168,6 +168,8 @@ async function removeBid(id){
         }
     }
     const updateInfo = await userCollection.updateOne({_id:userId},{$pull:{userBids:id}});
+    const user = await this.getUserById(userId);
+    console.log(user);
     if (!updateInfo.matchedCount && !updateInfo.modifiedCount){
         throw 'Update failed';
       }
