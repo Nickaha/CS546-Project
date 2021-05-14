@@ -22,8 +22,7 @@
                     method: 'DELETE',
                     url: window.location.origin +"/listing/"+elem_id,
                     success: function(data){
-                        $(selector).remove();
-                        alert("Deletion successful.");
+                        $(selector).html("Deleted successfully.");
                     },
                     error: function(jqxhr) {
                         alert( JSON.parse(jqxhr.responseText).message );
@@ -43,8 +42,7 @@
                     method: 'DELETE',
                     url: window.location.origin +"/bids/"+elem_id,
                     success: function(data){
-                        $(selector).remove();
-                        alert("Deletion successful.");
+                        $(selector).html("Withdrawn successfully.");
                     },
                     error: function(jqxhr) {
                         alert( JSON.parse(jqxhr.responseText).message );
