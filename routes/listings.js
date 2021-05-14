@@ -69,10 +69,11 @@ router.post('/',async (req,res)=>{
     }
     
     let nftdata = req.body;
+    console.log(nftdata);
     let errors=[];
     if(!nftdata.url) errors.push('url is not provided');
     if(!nftdata.description) errors.push('description is not provided');
-    if(!nftdata.expdate) errors.push('expire date is not provided');
+    if(!nftdata.datetime) errors.push('expire date is not provided');
     if(errors.length>0){
         res.status(401).render('listings',{errors:errors, posterror:true});
     }
@@ -83,7 +84,7 @@ router.post('/',async (req,res)=>{
         var yyyy = today.getFullYear();
 
         today = mm + '/' + dd + '/' + yyyy;
-        const newlisting = await listingData.createListing(today, nftdata.expdate, nftdata.url, nftdata.description);
+        const newlisting = await listingData.createListing(today, nftdata.datetime, nftdata.url, nftdata.description);
         // Add Listing to User sub-collection.
         let currentUser = await userData.getUserById(req.session.user._id);
         currentUser.userListings.push(newlisting._id);

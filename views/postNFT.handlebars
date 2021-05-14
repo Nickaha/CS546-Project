@@ -18,13 +18,13 @@
     {{/if}}
     <form method="post" action="/listing">
         <label for="url">Enter URL</label><br>
-        <input id="url" type="text" name="url"/><br>
+        <input id="url" type="text" name="url" required/><br>
 
         <label for="description">Enter description</label><br>
         <textarea id="description" name="description" rows="4" cols="50"></textarea><br>
 
         <label for="datetime">Enter expiration date</label><br>
-        <input type="date" name="datetime" id="datetime"><br>
+        <input type="date" name="datetime" id="datetime" pattern="\d{1,2}/\d{1,2}/\d{4}" required><br>
 
         <button type="submit">Create Listing</button>
 
