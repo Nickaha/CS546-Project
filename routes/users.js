@@ -4,11 +4,9 @@ const data = require('../data');
 const userData = data.users;
 const bcrypt = require('bcryptjs');
 const listingData = data.listings;
-const xss = require('xss');
-
 router.get('/', async (req,res)=>{
     //console.log(req.session);
-    if(!xss(req.session.user)){
+    if(!req.session.user){
         res.render('login',{title:"Log in", haserror:false, haserror2:false,hidelogin:true,hidereg:false});
     } else{
         try{
@@ -67,7 +65,7 @@ router.post('/login', async (req,res) =>{
         return;
     }
     try{
-        xss(req.session.user) = user;
+        req.session.user = user;
         //console.log(req.session);
         res.redirect('/');
     } catch(e){
@@ -77,7 +75,7 @@ router.post('/login', async (req,res) =>{
 });
 
 router.post('/register', async (req,res)=>{
-    let registedata = xss(req.body);
+    let registedata = req.body;
     let errors = [];
     if(!registedata.first) errors.push('firstname is not provided');
     if(!registedata.last) errors.push('lastname is not provided');
@@ -97,7 +95,7 @@ router.post('/register', async (req,res)=>{
     }
     try{
         const newuser = await userData.createUser(registedata.first, registedata.last, registedata.username, registedata.email, registedata.country, parseInt(registedata.age), registedata.password1, registedata.bank);
-        xss(req.session.user) = newuser;
+        req.session.user = newuser;
         res.redirect('/user/register');
     } catch(e){
         errors.push(e);
@@ -106,21 +104,21 @@ router.post('/register', async (req,res)=>{
 });
 
 router.post('/changepw',async(req,res)=>{
-    let changedata = xss(req.body);
+    let changedata = req.body;
     let errors=[];
     //console.log(req.session.user);
     if(!changedata.username) errors.push('username is not provided');
     if(!changedata.password1) errors.push("new password is not provided");
     if(!changedata.password2) errors.push("re-enter new password is not provided");
     if(changedata.password1 !== changedata.password2) errors.push("password doesn't match");
-    if(changedata.username !== xss(req.session.user.userName)) errors.push("Username not matching current user");
+    if(changedata.username !== req.session.user.userName) errors.push("Username not matching current user");
     if(errors.length>0){
         res.status(401).render('changepassword',{errors:errors, haserror:true, title:'Change Password'});
         return;
     }
     try{
-        const updateuser = userData.updateUser(xss(req.session.user._id),{password:changedata.password1});
-        xss(req.session.user) = updateuser;
+        const updateuser = userData.updateUser(req.session.user._id,{password:changedata.password1});
+        req.session.user = updateuser;
         res.redirect('/');
     } catch(e){
         errors.push(e);
@@ -128,7 +126,7 @@ router.post('/changepw',async(req,res)=>{
     }
 });
 router.get('/changepw',async (req,res)=>{
-    if(!xss(req.session.user)){
+    if(!req.session.user){
         res.render('login',{title:"Log in", haserror:false, haserror2:false, hidelogin:true,hidereg:false});
     } else{
         res.render('changepassword',{title:"Change Password"});
@@ -136,14 +134,14 @@ router.get('/changepw',async (req,res)=>{
 });
 router.get('/register', async(req,res)=>{
     //console.log(req.session);
-    if(!xss(req.session.user)){
+    if(!req.session.user){
         res.render('login',{title:"Log in", haserror:false, haserror2:false, hidelogin:false,hidereg:true});
     } else{
         res.render('homepage',{title:"Home Page"});
     }
 });
 router.get('/dashboard',async (req,res)=>{
-    if(!xss(req.session.user)){
+    if(!req.session.user){
         res.redirect('/');
     } else{
         res.render('accountdashboard',{title:"Dash Board"});
@@ -151,7 +149,7 @@ router.get('/dashboard',async (req,res)=>{
 });
 
 router.get('/logout', async(req,res)=>{
-    xss(req.session.destroy());
+    req.session.destroy();
     res.render('logout', {title:'Log out'});
 });
 
