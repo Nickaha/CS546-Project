@@ -4,14 +4,13 @@ const data = require('../data');
 const bidData = data.bids;
 const listingData = data.listings;
 let { ObjectId } = require('mongodb');
-const xss = require('xss');
 
 router.get( '/', async (req, res) =>{
-    if (!xss(req.session.user)){
+    if (!req.session.user){
         res.render('login',{title:"Log in", haserror:false, haserror2:false,hidelogin:true,hidereg:false});
     } else{
         try {
-            const user = xss(req.session.user);
+            const user = req.session.user;
             // Fetch all the bids for that user.
             const userBids = await bidData.getUserBids(user._id.valueOf());
             //Get myBid onto the NFT listings, get highestBid as well.
@@ -41,7 +40,6 @@ router.get( '/', async (req, res) =>{
     
                 // Get data into format for passing into handlebars
                 bidListings.push({
-                    id: userBids[i],
                     url: '/listing/'+listid,
                     image: listing.URL,
                     expire: listing.endDate,
@@ -64,13 +62,13 @@ router.post('/:id', async (req, res) => {
     // Will be called through AJAX on listing pages.
     // Check user authentication and data integrity. 
 
-    if (!xss(req.session.user)){
+    if (!req.session.user){
         return res.status(401).json({message: "Unauthorized."});
     }
-    let listid = xss(req.params.id);
-    const bid = xss(req.body.bid); // POST body MUST contain attribute "bid"!
-    const username = xss(req.session.user.userName);
-    const userId = xss(req.session.user._id);
+    let listid = req.params.id;
+    const bid = req.body.bid; // POST body MUST contain attribute "bid"!
+    const username = req.session.user.userName;
+    const userId = req.session.user._id;
 
     try {
         if (!listid || listid === ""){
@@ -113,15 +111,15 @@ router.delete('/:id', async (req, res) => {
     // This route will not return HTML - it returns JSON and a status code.
     // Will be called through AJAX on listing/bids pages.
     // Check user authentication and data integrity.
-    if (!xss(req.session.user)){
+    if (!req.session.user){
         return res.status(401).json({message: "Unauthorized."});
     }
-    if (!xss(req.session.user._id)){
+    if (!req.session.user._id){
         return res.status(500).json({message: "User ID missing from session."});
     }
 
-    let bidId = xss(req.params.id);
-    const userBids = await bidData.getUserBids(xss(req.session.user._id));
+    let bidId = req.params.id;
+    const userBids = await bidData.getUserBids(req.session.user._id);
 
     //Check that id is provided
     if (bidId === undefined || bidId === ""){
