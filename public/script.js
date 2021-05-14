@@ -40,15 +40,28 @@
                     method: 'DELETE',
                     url: window.location.origin +"/bids/"+elem_id,
                     statusCode: {
-                        404: function(responseObject, textStatus, jqXHR) {
+                        200: function(responseObject, textStatus, jqXHR) {
                             // Successful response
                             if (responseObject.message) feedback = responseObject.message;
-                            else feedback = "Deletion successful.";
                         },
-                        503: function(responseObject, textStatus, errorThrown) {
+                        400: function(responseObject, textStatus, errorThrown) {
                             // Service Unavailable (503)
                             if (responseObject.message) feedback = responseObject.message;
-                            else feedback = "Failure: Deletion failed.";
+                            success = false;
+                        },
+                        401: function(responseObject, textStatus, errorThrown) {
+                            // Service Unavailable (503)
+                            if (responseObject.message) feedback = responseObject.message;
+                            success = false;
+                        },
+                        403: function(responseObject, textStatus, errorThrown) {
+                            // Service Unavailable (503)
+                            if (responseObject.message) feedback = responseObject.message;
+                            success = false;
+                        },
+                        500: function(responseObject, textStatus, errorThrown) {
+                            // Service Unavailable (503)
+                            if (responseObject.message) feedback = responseObject.message;
                             success = false;
                         } 
                     }
