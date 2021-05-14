@@ -23,6 +23,7 @@ async function createListing(postDate, endDate, url, description){
     if(!endDate) throw `end date needs to provide`;
     if(typeof endDate !== 'string') throw `end date needs to be string`;
     if(isNaN(Date.parse(endDate))) throw `not a valid end date`;
+    if((Date.parse(endDate)-Date.parse(postDate))<0) throw 'end date has to be date in the future';
 
     if(!url) throw "url needs to be provided";
     if(typeof url !== 'string') throw 'url is not string';

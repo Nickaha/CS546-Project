@@ -69,7 +69,7 @@ router.post('/',async (req,res)=>{
     }
     
     let nftdata = req.body;
-    console.log(nftdata);
+    //console.log(nftdata);
     let errors=[];
     if(!nftdata.url) errors.push('url is not provided');
     if(!nftdata.description) errors.push('description is not provided');

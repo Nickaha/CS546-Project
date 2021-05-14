@@ -61,7 +61,7 @@ router.post('/:id', async (req, res) => {
     // This route will not return HTML - it returns JSON and a status code.
     // Will be called through AJAX on listing pages.
     // Check user authentication and data integrity. 
-    console.log(req.body);
+    //console.log(req.body);
     if (!req.session.user){
         return res.status(401).json({message: "Unauthorized."});
     }
@@ -92,10 +92,11 @@ router.post('/:id', async (req, res) => {
     }
     // Post the bid.
     try {
+        //console.log(listid);
         const bidMade = await bidData.createBid(username, parseInt(bid), listid,userId);
         return res.status(200).json({message: "Bid successful."});
     } catch (error) {
-        return res.status(500).json({message: "Failed to post bid."});
+        return res.status(500).json({message: error});
     }
 });
 
