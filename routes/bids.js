@@ -40,6 +40,7 @@ router.get( '/', async (req, res) =>{
     
                 // Get data into format for passing into handlebars
                 bidListings.push({
+                    id: userBids[i],
                     url: '/listing/'+listid,
                     image: listing.URL,
                     expire: listing.endDate,
