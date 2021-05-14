@@ -112,13 +112,16 @@ router.post('/changepw',async(req,res)=>{
     if(!changedata.password2) errors.push("re-enter new password is not provided");
     if(changedata.password1 !== changedata.password2) errors.push("password doesn't match");
     if(changedata.username !== req.session.user.userName) errors.push("Username not matching current user");
+    const changehw = await bcrypt.compare(changedata.password1,req.session.user.password);
+    if(changehw) errors.push('Enter a different password from the current password');
     if(errors.length>0){
         res.status(401).render('changepassword',{errors:errors, haserror:true, title:'Change Password'});
         return;
     }
     try{
-        const updateuser = userData.updateUser(req.session.user._id,{password:changedata.password1});
+        const updateuser = await userData.updateUser(req.session.user._id,{password:changedata.password1});
         req.session.user = updateuser;
+        //console.log(updateuser);
         res.redirect('/');
     } catch(e){
         errors.push(e);
