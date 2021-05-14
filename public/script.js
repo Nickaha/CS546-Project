@@ -43,7 +43,6 @@
                         alert("Deletion successful.");
                     },
                     error: function(jqxhr) {
-                        console.log("lol")
                         alert( JSON.parse(jqxhr.responseText).message );
                     }
                 });
