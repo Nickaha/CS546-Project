@@ -123,7 +123,7 @@ router.delete('/:id', async (req, res) => {
      */ 
     let found = false;
     for (let i = 0; i < userBids.length; i++){
-        if ( bidId === userBids[i]._id ){
+        if ( bidId === userBids[i]){
             found = true;
         }
     }
@@ -137,6 +137,7 @@ router.delete('/:id', async (req, res) => {
         const deletion = await bidData.deleteBid(bidId);
         return res.status(200).json({message: "Bid successfully deleted."});
     } catch (error) {
+        console.log(error);
         return res.status(500).json({message: "Bid deletion failed."});
     }
 });

@@ -1,5 +1,6 @@
 const mongoCollections = require('../config/mongoCollections');
 const listings = mongoCollections.listings;
+const usercol = mongoCollections.users;
 const users = require('./users');
 const uuid = require('uuid');
 
@@ -154,6 +155,7 @@ async function removeComments(id){
             }
         }
     }
+    const userCollection = await usercol();
     const updateInfo = await userCollection.updateOne({_id:listingId},{$pull:{comments:{_id:id}}});
     if (!updateInfo.matchedCount && !updateInfo.modifiedCount){
         throw 'Update failed';
@@ -161,6 +163,7 @@ async function removeComments(id){
     return true;
 }
 async function removeBids(id){
+    // Does not seem to be working given the proper id.
     if(!id) throw `id is not provided`;
     if(typeof id !== 'string') throw `id is not string`;
     if(id.trim().length===0) throw `emptry string of id`;
@@ -175,6 +178,7 @@ async function removeBids(id){
             }
         }
     }
+    const userCollection = await usercol();
     const updateInfo = await userCollection.updateOne({_id:listingId},{$pull:{bids:{_id:id}}});
     if (!updateInfo.matchedCount && !updateInfo.modifiedCount){
         throw 'Update failed';
