@@ -166,27 +166,39 @@ async function removeComments(id){
       }
     return true;
 }
-async function removeBids(id){
+async function removeBids(bid_id, list_id){
     // Does not seem to be working given the proper id.
-    if(!id) throw `id is not provided`;
-    if(typeof id !== 'string') throw `id is not string`;
-    if(id.trim().length===0) throw `emptry string of id`;
+    if(!bid_id) throw `id is not provided`;
+    if(typeof bid_id !== 'string') throw `id is not string`;
+    if(bid_id.trim().length===0) throw `emptry string of id`;
 
+    // Get specific listing, remove the bid_id, update the listing.
     const listingCollection = await listings();
-    let listingId = "";
-    const lisinglist = await listingCollection.find({},{projection: {_id:1, bids:1}}).toArray();
-    for (l of lisinglist){
-        for(lists of l.bids){
-            if(lists._id === id){
-                listingId = l._id;
+
+    const listing = await listingCollection.findOne({ _id: list_id});
+    if (listing === null){
+        throw 'Bid Delete: Listing not found!';
+    }
+    
+    for (let i = 0; i < listing.bids.length; i++){
+        if (listing.bids[i]._id === bid_id){
+            let newlistbids = listing.bids;
+            newlistbids.splice(i, 1);
+
+            const targetListingUpdate = await listingCollection.updateOne(
+                {_id: list_id},
+                {$set: {bids: newlistbids}}
+            );
+
+            if (targetListingUpdate.modifiedCount === 0){
+                throw `could not update listing id ${list_id} during bid delete.`;
             }
+
+            break;
         }
     }
-    const userCollection = await usercol();
-    const updateInfo = await userCollection.updateOne({_id:listingId},{$pull:{bids:{_id:id}}});
-    if (!updateInfo.matchedCount && !updateInfo.modifiedCount){
-        throw 'Update failed';
-      }
+
+
     return true;
 }
 

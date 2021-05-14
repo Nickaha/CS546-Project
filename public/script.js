@@ -31,8 +31,6 @@
             //Promp user if they're sure and then go on with the delete request.
             let result = window.confirm("Are you sure you want to withdraw your bid?");
             if (result){
-                let feedback = "AJAX unsuccessful.";
-                let success = false;
                 // DELETE to our server and see response.
                 //var origin   = window.location.origin; Returns base URL (https://example.com)
 
@@ -40,18 +38,20 @@
                     method: 'DELETE',
                     url: window.location.origin +"/bids/"+elem_id,
                     success: function(data){
-                        feedback = "Deletion successful.";
-                        success = true;
+                        console.log("haha")
+                        $(selector).remove();
+                        alert("Deletion successful.");
                     },
                     error: function(jqxhr) {
-                        feedback = "Deletion failed.";
-                        success = false;
+                        console.log("lol")
+                        alert( JSON.parse(jqxhr.responseText).message );
                     }
                 });
 
                 //After our AJAX has had a response. 
-                if (success) $(selector).remove();
-                alert(feedback);
+                //if (success) $(selector).remove();
+                //console.log(success);
+                //alert(feedback);
             }
         });
 

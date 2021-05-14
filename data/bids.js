@@ -11,7 +11,7 @@ async function createBid(username, bid, listid, userid){
 
     if(!bid) throw "bid needs to be provided";
     if(typeof bid !== 'number' || isNaN(bid)) throw 'bid needs to be number';
-
+    // Potentially: remove old bids if listid is the same.
     const bidCollection = await bids();
     const bidlist =  await listings.getLisingById(listid);
     const bidoflist = bidlist.bids;
@@ -89,7 +89,7 @@ async function deleteBid(id){
     const bidCollection = await bids();
     const bid = await bidCollection.findOne({_id:id});
     if (bid===null) throw 'no bid with that id';
-    await listings.removeBids(id);
+    await listings.removeBids(id, bid.listid);
     await users.removeBid(id);
     const deleteinfo = await bidCollection.deleteOne({ _id: id });
     if (deleteinfo.deletedCount === 0) {
