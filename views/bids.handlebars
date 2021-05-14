@@ -20,8 +20,13 @@
         <div class="card-body">
             <h4 class="card-title"><b>Auction Ends: {{this.expire}}</b></h4>
             <p>{{this.desc}}</p>
-            <p>Highest Bid: {{this.highestbid}}</p>
+            {{#if this.myBidTop}}
+            <p>My Bid is the Current Top Bid</p>
             <p>My Bid: {{this.mybid}}</p>
+            {{else}}
+            <p>Highest Bid: {{this.highestbid}}</p>
+            <p>My Bid (Outbid): {{this.mybid}}</p>
+            {{/if}}
             <button class="close-bid">Withdraw Bid</button>
         </div>
     </div>

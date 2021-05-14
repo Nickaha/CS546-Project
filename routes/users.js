@@ -23,6 +23,11 @@ router.get('/', async (req,res)=>{
                         maxbid = bid.bid;
                     }
                 });
+                // This looks nicer when a listing is blank. 
+                if (maxbid === 0){
+                    maxbid = "None yet";
+                }
+
                 renderData.push({
                     url: '/listing/'+listing._id,
                     image: listing.URL,

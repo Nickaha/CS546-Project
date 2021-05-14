@@ -16,10 +16,10 @@
         <div class="card" style="width: 18rem;">
             <a href={{this.url}}><img class="card-img-top" src= {{this.image}} alt="NFT image"></a>
             <div class="card-body">
-                <h4 class="card-title"><b>{{this.expire}}</b></h4>
-                <p>{{this.user}}</p>
+                <h4 class="card-title"><b>Auction Ends: {{this.expire}}</b></h4>
+                <p>{{this.user}}</p> <!--This doesn't work, user is not saved to listings -->
                 <p>{{this.desc}}</p>
-                <p>{{this.highestbid}}</p>
+                <p>Highest Bid: {{this.highestbid}}</p>
             </div>
         </div>
         {{/each}}

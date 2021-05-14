@@ -45,7 +45,8 @@ router.get( '/', async (req, res) =>{
                     expire: listing.endDate,
                     desc: listing.description,
                     highestbid: topBid,
-                    mybid: myBid.bid
+                    mybid: myBid.bid,
+                    myBidTop: (myBid.bid === topBid)
                 });
             }
             res.render('bids', {title: "Your Bids", NFT: bidListings}); 
