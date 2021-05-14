@@ -4,7 +4,7 @@ const listings = require('./listings');
 const users = require('./users');
 const uuid = require('uuid');
 
-async function createBid(username, bid, listid){
+async function createBid(username, bid, listid, userid){
     if(!username) throw "username needs to be provided";
     if(typeof username !== 'string') throw 'username needs to be string';
     if(username.trim().length===0) throw 'username can not be empty';
@@ -15,6 +15,8 @@ async function createBid(username, bid, listid){
     const bidCollection = await bids();
     const bidlist =  await listings.getLisingById(listid);
     const bidoflist = bidlist.bids;
+    const bidlist2 = await users.getUserById(userid);
+    const bidoflist2 = bidlist2.userBids;
     let maxbid = 0;
     bidoflist.forEach(x => {
         if(x.bid>maxbid){
@@ -46,7 +48,9 @@ async function createBid(username, bid, listid){
     }
     // Add to subdocument and update listing.
     bidoflist.push(newBid);
+    bidoflist2.push(newBid._id);
     await listings.updateListing(listid, {bids:bidoflist});
+    await users.updateUser(userid,{userBids:bidoflist2});
     return rv;
 }
 

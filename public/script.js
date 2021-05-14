@@ -72,8 +72,26 @@
         if(bid !== null || bid !== undefined){
             var requestConfig = {
                 method:'POST',
-                url:''
-            }
+                url:'/bids/'+listid,
+                data: JSON.stringify({
+                    bid:bid
+                })
+            };
+            $.ajax(requestConfig).then(function(responseMessage){
+                window.location.assign(`/listing/${listid}`);
+            });
+        }
+        if(comment !== null || comment !== undefined){
+            var requestConfig = {
+                method:'POST',
+                url:'/comment/'+listid,
+                data: JSON.stringify({
+                    comment:comment
+                })
+            };
+            $.ajax(requestConfig).then(function(responseMessage){
+                window.location.assign(`/listing/${listid}`);
+            });
         }
     });
 })(window.jQuery);

@@ -92,7 +92,7 @@ router.post('/:id', async (req, res) => {
     }
     // Post the bid.
     try {
-        const bidMade = await bidData.createBid(username, bid, listid);
+        const bidMade = await bidData.createBid(username, bid, listid,userId);
         return res.status(200).json({message: "Bid successful."});
     } catch (error) {
         return res.status(500).json({message: "Failed to post bid."});
