@@ -18,12 +18,17 @@
             //Promp user if they're sure and then go on with the delete request.
             let result = window.confirm("Are you sure you want to delete your listing?");
             if (result){
-                let feedback = "Removal successful.";
-                $(selector).remove();
-
-
-
-                alert(feedback);
+                $.ajax({
+                    method: 'DELETE',
+                    url: window.location.origin +"/listing/"+elem_id,
+                    success: function(data){
+                        $(selector).remove();
+                        alert("Deletion successful.");
+                    },
+                    error: function(jqxhr) {
+                        alert( JSON.parse(jqxhr.responseText).message );
+                    }
+                });
             }
         });
 
@@ -38,7 +43,6 @@
                     method: 'DELETE',
                     url: window.location.origin +"/bids/"+elem_id,
                     success: function(data){
-                        console.log("haha")
                         $(selector).remove();
                         alert("Deletion successful.");
                     },
