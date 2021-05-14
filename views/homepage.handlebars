@@ -7,9 +7,15 @@
             <a class="nav-item nav-link active" href="/aboutus">About Us</a>
             <a class="nav-item nav-link active" href="/user/logout">Logout</a>
         </div>
+        <form class="form-inline">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button id="s" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
     </nav>
 
-    <h1>NFT Marketplace</h1>
+    
+    <div class="container">
+        <h1>NFT Marketplace</h1>
     <div class="row h-100" >
         {{#if NFT}}
         {{#each NFT}}
@@ -26,5 +32,6 @@
         {{else}}
         <div>No current listings</div>
         {{/if}}
+    </div>
     </div>
 </main>
