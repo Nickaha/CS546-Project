@@ -32,38 +32,20 @@
             let result = window.confirm("Are you sure you want to withdraw your bid?");
             if (result){
                 let feedback = "AJAX unsuccessful.";
-                let success = true;
+                let success = false;
                 // DELETE to our server and see response.
                 //var origin   = window.location.origin; Returns base URL (https://example.com)
 
                 $.ajax({
                     method: 'DELETE',
                     url: window.location.origin +"/bids/"+elem_id,
-                    statusCode: {
-                        200: function(responseObject, textStatus, jqXHR) {
-                            // Successful response
-                            if (responseObject.message) feedback = responseObject.message;
-                        },
-                        400: function(responseObject, textStatus, errorThrown) {
-                            // Service Unavailable (503)
-                            if (responseObject.message) feedback = responseObject.message;
-                            success = false;
-                        },
-                        401: function(responseObject, textStatus, errorThrown) {
-                            // Service Unavailable (503)
-                            if (responseObject.message) feedback = responseObject.message;
-                            success = false;
-                        },
-                        403: function(responseObject, textStatus, errorThrown) {
-                            // Service Unavailable (503)
-                            if (responseObject.message) feedback = responseObject.message;
-                            success = false;
-                        },
-                        500: function(responseObject, textStatus, errorThrown) {
-                            // Service Unavailable (503)
-                            if (responseObject.message) feedback = responseObject.message;
-                            success = false;
-                        } 
+                    success: function(data){
+                        feedback = "Deletion successful.";
+                        success = true;
+                    },
+                    error: function(jqxhr) {
+                        feedback = "Deletion failed.";
+                        success = false;
                     }
                 });
 
