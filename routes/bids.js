@@ -61,7 +61,6 @@ router.post('/:id', async (req, res) => {
     // This route will not return HTML - it returns JSON and a status code.
     // Will be called through AJAX on listing pages.
     // Check user authentication and data integrity. 
-    //console.log(req.body);
     if (!req.session.user){
         return res.status(401).json({message: "Unauthorized."});
     }

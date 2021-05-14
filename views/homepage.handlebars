@@ -10,17 +10,19 @@
     </nav>
 
     <h1>NFT Marketplace</h1>
-    {{#if NFT}}
-    {{#each NFT}}
-    <div class="card" style="width: 18rem;">
-        <a href={{this.url}}><img class="card-img-top" src= {{this.image}} alt="NFT image"></a>
-        <div class="card-body">
-            <h4 class="card-title"><b>{{this.expire}}</b></h4>
-            <p>{{this.user}}</p>
-            <p>{{this.desc}}</p>
-            <p>{{this.highestbid}}</p>
+    <div class="row h-100" >
+        {{#if NFT}}
+        {{#each NFT}}
+        <div class="card" style="width: 18rem;">
+            <a href={{this.url}}><img class="card-img-top" src= {{this.image}} alt="NFT image"></a>
+            <div class="card-body">
+                <h4 class="card-title"><b>{{this.expire}}</b></h4>
+                <p>{{this.user}}</p>
+                <p>{{this.desc}}</p>
+                <p>{{this.highestbid}}</p>
+            </div>
         </div>
+        {{/each}}
+        {{/if}}
     </div>
-    {{/each}}
-    {{/if}}
 </main>
