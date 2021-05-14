@@ -31,6 +31,24 @@
             }
         });
 
+        $(this).find('.close-listing2').click(function(){
+            //Promp user if they're sure and then go on with the delete request.
+            let result = window.confirm("Accept current bid and end listing?");
+            if (result){
+                $.ajax({
+                    method: 'DELETE',
+                    url: window.location.origin +"/listing/"+elem_id,
+                    success: function(data){
+                        $(selector).html("Auction finished successfully.");
+                        alert( "Auction Complete! The Chuck E Cheese Coins will be deposited in your account." );
+                    },
+                    error: function(jqxhr) {
+                        alert( `Failed to accept bid: ${JSON.parse(jqxhr.responseText).message}` );
+                    }
+                });
+            }
+        });
+
         $(this).find('.close-bid').click(function(){
             //Promp user if they're sure and then go on with the delete request.
             let result = window.confirm("Are you sure you want to withdraw your bid?");

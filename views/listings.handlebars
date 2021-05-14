@@ -9,6 +9,7 @@
         </div>
     </nav>
     <h1>My Listings</h1>
+    <div class="container">
     <div class="row h-100">
     {{#if NFT}}
     {{#each NFT}}
@@ -22,12 +23,13 @@
                 <label for="datetime">Change expiration date</label><br>
                 <input type="date" name="datetime" id="datetime" pattern="\d{4}-\d{2}-\d{2}">
                 <button type="submit">Submit</button><br>
-                <button class="close-listing2">Accept Bid</button><br>
-                <button class="close-listing">End Listing</button>
             </form>
+            <button class="close-listing2">Accept Bid</button><br>
+            <button class="close-listing">End Listing</button>
         </div>
     </div>
     {{/each}}
+    </div>
     </div>
     {{else}}
     <div>No current listings</div>
