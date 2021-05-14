@@ -58,7 +58,7 @@ router.get('/:id', async (req,res)=>{
                 }
             });
             listinginfo.highestbid = maxbid;
-            res.render('NFT', {title: "NFT Listing: " + listinginfo.description, NFT:listinginfo});
+            res.render('NFT', {title: "NFT Listing: " + listinginfo.description, NFT:listinginfo,userid:req.session.user._id});
         } catch(e){
             res.status(401).render('listings',{error:e, haserror:true});
         }

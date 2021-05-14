@@ -41,5 +41,18 @@
 
         return id;
     }).get();
-
+    var bidcommentform = $('#bid-or-comment');
+    bidcommentform.submit(function(event){
+        event.preventDefault();
+        var bid = $('#bid').val();
+        var comment = $('#comment').val();
+        var userid = $('#userid_bc').val();
+        var listid = $('#listid').val();
+        if(bid !== null || bid !== undefined){
+            var requestConfig = {
+                method:'POST',
+                url:''
+            }
+        }
+    });
 })(window.jQuery);
