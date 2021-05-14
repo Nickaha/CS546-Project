@@ -41,7 +41,7 @@ router.get('/', async (req,res)=>{
 });
 
 router.post('/login', async (req,res) =>{
-    let logindata = xss(req.body);
+    let logindata = req.body;
     let errors = [];
     if(!logindata.username) errors.push('Username needs to provide');
     if(!logindata.password) errors.push('password needs to provide');
