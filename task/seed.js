@@ -32,6 +32,11 @@ async function main(){
     // const res2 = await listings.updateListing(listing1._id,{comments:listing1.comments});
     sally.userListings.push(listing1._id);
     const res3 = await users.updateUser(sallyid,{userListings:sally.userListings});
+
+    const elon = await users.createUser('elon', 'musk', 'elon', 'elon@musk.com', 'South Africa', 49, 'dogetothemoon', '9999999999999999999');
+    const axiiii = await users.createUser('axiii', 'musk', 'ashhh', 'asshmusk@tesla.com', 'United States', 18, 'archangel', '000000000000000000');
+    const pepe = await users.createUser('pepe', 'lefrog', 'pepethefrog', 'pepe@reddit.com', 'Internet', 34, 'redditrules', '456456456456');
+
     console.log('Done seeding database');
     await db.serverConfig.close();
 }
