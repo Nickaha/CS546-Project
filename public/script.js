@@ -10,9 +10,50 @@
     });
 
     // Get into each listing and add an event listener for the delete button.
-    var listingRemoveButtons = $("div.card[id]").map(function(){
+    var bidListingButtons = $("div.card[id]").map(function(){
         let selector = "#"+ this.id;
         let elem_id = this.id;
+        let expires = $(this).find('.expdate');
+        if (expires) console.log(expires.text());
+
+        $(this).find('.change').submit( function (event){
+            event.preventDefault();
+            let changeinput = $(this).find('.changeinput');
+            
+            //Client side validation.
+            if (changeinput.val() === ""){
+                // Do nothing for an empty form.
+                return;
+            }
+            if ( Date.parse(changeinput.val()) - (new Date()) < 0){
+                alert("New date is too soon or has already passed.");
+                return;
+            }
+            if (expires.text().trim() === changeinput.val().trim()){
+                //Do nothing for the same date.
+                return;
+            }
+
+            let result = window.confirm("Update your bid's end date?");
+            if (result){
+                //Server-side: AJAX call.
+                $.ajax({
+                    method: 'PATCH',
+                    url: window.location.origin+"/listing/"+elem_id,
+                    data: {
+                        datetime: changeinput.val()
+                    },
+                    success: function(data){
+                        //Client-side update to reflect changes.
+                        expires.html(changeinput.val());
+                        alert("Updated successfully.");
+                    },
+                    error: function(jqxhr) {
+                        alert( `Failed to update listing: ${JSON.parse(jqxhr.responseText).message}` );
+                    }
+                });
+            }  
+        } );
 
         $(this).find('.close-listing').click(function(){
             //Promp user if they're sure and then go on with the delete request.

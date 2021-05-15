@@ -98,7 +98,15 @@ async function updateListing(id, updateInfo){
     if(typeof id !== 'string') throw `id is not string`;
     if(id.trim().length===0) throw `emptry string of id`;
 
+    let thislisting = await this.getLisingById(id);
     let updateList = {};
+
+    if (updateInfo.endDate){
+        if(typeof updateInfo.endDate !== 'string') throw `end date needs to be string`;
+        if(isNaN(Date.parse(updateInfo.endDate))) throw `not a valid end date`;
+        if((Date.parse(updateInfo.endDate)-Date.parse(thislisting.postDate))<0) throw 'end date has to be date in the future';
+        updateList.endDate = updateInfo.endDate;
+    }
 
     if(updateInfo.url){
         if(typeof updateInfo.url !== 'string') throw 'url is not string';

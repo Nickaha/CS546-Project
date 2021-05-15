@@ -102,6 +102,46 @@ router.post('/',async (req,res)=>{
     }
 });
 
+router.patch('/:id', async (req, res) => {
+    //Patch method that allows to update the date only.
+    let listid = req.params.id;
+    let newtime = xss(req.body.datetime);
+
+    if (!req.session.user){
+        return res.status(401).json({message: "Unauthorized."});
+    }
+    if (!req.session.user._id){
+        return res.status(500).json({message: "User ID missing from session."});
+    }
+    if (listid === undefined || listid === ""){
+        return res.status(400).json({message: "List id missing."});
+    }
+    if (!newtime || newtime === ""){
+        return res.status(400).json({message: "Date missing."});
+    }
+    //Check user is updating a listing that is theirs.
+    const userListings = await listingData.getallofuser(req.session.user._id);
+    let found = false;
+    for (let i = 0; i < userListings.length; i++){
+        if (listid === userListings[i]._id){
+            found = true;
+        }
+    }
+    // Return error if no matching bid is found.
+    if (!found){
+        return res.status(403).json({message: "Listing ID not found or not authorized for current user."});
+    }
+
+    try {
+        const update = await listingData.updateListing(listid, {endDate:newtime} );
+        return res.status(200).json({message: "Listing successfully updated."});
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({message: "Listing update failed."});
+    }
+
+});
+
 router.delete('/:id', async (req, res) => {
     // This route will not return HTML - it returns JSON and a status code.
     // Will be called through AJAX on listing/bids pages.

@@ -16,12 +16,12 @@
     <div id={{this.id}} class="card" style="width: 18rem;">
         <a href={{this.url}}><img class="card-img-top" src= {{this.image}} alt="NFT image"></a>
         <div class="card-body">
-            <h2 class="card-title"><b>Auction Ends: {{this.expire}}</b></h2>
+            <h2 class="card-title"><b>Auction Ends: <span class="expdate">{{this.expire}}</span></b></h2>
             <p>{{this.desc}}</p>
             <p>Highest Bid: {{this.highestbid}}</p>
-            <form action="">
+            <form class="change" action="">
                 <label for="datetime">Change expiration date</label><br>
-                <input type="date" name="datetime" id="datetime" pattern="\d{4}-\d{2}-\d{2}">
+                <input class="changeinput" type="date" name="datetime" id="datetime" pattern="\d{4}-\d{2}-\d{2}">
                 <button type="submit">Submit</button><br>
             </form>
             <button class="close-listing2">Accept Bid</button><br>
