@@ -4,6 +4,8 @@ const data = require('../data');
 const userData = data.users;
 const bcrypt = require('bcryptjs');
 const listingData = data.listings;
+const xss = require('xss');
+
 router.get('/', async (req,res)=>{
     //console.log(req.session);
     if(!req.session.user){
@@ -99,7 +101,7 @@ router.post('/register', async (req,res)=>{
         return;
     }
     try{
-        const newuser = await userData.createUser(registedata.first, registedata.last, registedata.username, registedata.email, registedata.country, parseInt(registedata.age), registedata.password1, registedata.bank);
+        const newuser = await userData.createUser(xss(registedata.first), xss(registedata.last), xss(registedata.username), xss(registedata.email), xss(registedata.country), parseInt(registedata.age), xss(registedata.password1), xss(registedata.bank));
         req.session.user = newuser;
         res.redirect('/');
     } catch(e){
