@@ -7,9 +7,8 @@
             <a class="nav-item nav-link active" href="/aboutus">About Us</a>
             <a class="nav-item nav-link active" href="/user/logout">Logout</a>
         </div>
-        <form class="form-inline">
+        <form id="s" class="form-inline">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button id="s" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
     </nav>
 
@@ -23,8 +22,7 @@
             <a href={{this.url}}><img class="card-img-top" src= {{this.image}} alt="NFT image"></a>
             <div class="card-body">
                 <h2 class="card-title"><b>Auction Ends: {{this.expire}}</b></h2>
-                <p>{{this.user}}</p> <!--This doesn't work, user is not saved to listings -->
-                <p>{{this.desc}}</p>
+                <p class="desc">{{this.desc}}</p>
                 <p>Highest Bid: {{this.highestbid}}</p>
             </div>
         </div>

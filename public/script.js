@@ -9,13 +9,37 @@
         window.location.assign('/');
     });
 
-    // Get into each listing and add an event listener for the delete button.
+    //Search form on homepage
+    let mySearchForm = $('#s');
+    let row = $('.row');
+
+    mySearchForm.keyup(function(){
+        inputval = $(this).find('input').val();
+        search = inputval.trim().toUpperCase();
+        row.children().each( function(i){
+            //For each child of the row container, determine visibility.
+            if (inputval === ""){
+                $(this).show();
+                return;
+            }
+            let desc = $(this).find('.desc');
+            let myText = desc.text().trim().toUpperCase();
+            //See if description contains search value.
+            if (myText.indexOf(search) < 0 ){
+                $(this).hide();
+            }else{
+                $(this).show();
+            }
+        } );
+    });
+
+    // Get into each listing/bid and add an event listener for the delete/update button.
     var bidListingButtons = $("div.card[id]").map(function(){
         let selector = "#"+ this.id;
         let elem_id = this.id;
         let expires = $(this).find('.expdate');
-        if (expires) console.log(expires.text());
 
+        //Update listing
         $(this).find('.change').submit( function (event){
             event.preventDefault();
             let changeinput = $(this).find('.changeinput');
@@ -55,6 +79,7 @@
             }  
         } );
 
+        //Delete listing
         $(this).find('.close-listing').click(function(){
             //Promp user if they're sure and then go on with the delete request.
             let result = window.confirm("Are you sure you want to delete your listing?");
@@ -72,6 +97,7 @@
             }
         });
 
+        //Accept listing
         $(this).find('.close-listing2').click(function(){
             //Promp user if they're sure and then go on with the delete request.
             let result = window.confirm("Accept current bid and end listing?");
@@ -89,7 +115,7 @@
                 });
             }
         });
-
+        //End bid
         $(this).find('.close-bid').click(function(){
             //Promp user if they're sure and then go on with the delete request.
             let result = window.confirm("Are you sure you want to withdraw your bid?");
