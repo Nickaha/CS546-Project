@@ -86,7 +86,7 @@ router.post('/',async (req,res)=>{
        
         
         today = mm + '/' + dd + '/' + yyyy;
-        const newlisting = await listingData.createListing(today, nftdata.datetime, nftdata.url, nftdata.description);
+        const newlisting = await listingData.createListing(today, xss(nftdata.datetime), xss(nftdata.url), xss(nftdata.description));
         // Add Listing to User sub-collection.
      
         let currentUser = await userData.getUserById(req.session.user._id);
